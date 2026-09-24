@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Closer Script</title>
+<style>
+:root{--y:#d8a600;--ybg:#fff8db;--opt:#d6b84b;--optbg:#fffdf1;--blue:#2563eb;--bluebg:#eff6ff;--g:#9aa0a6;--gbg:#f3f4f6;--ink:#1a1a1a;--mut:#666;--acc:#0f766e;--accbg:#ecfdf5}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#f7f7f5;color:var(--ink)}
+.app{max-width:1240px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:24px;margin:0}
+nav{display:flex;background:#e9e9e6;border-radius:999px;padding:4px}
+nav button{font:inherit;font-size:15px;font-weight:600;border:0;background:none;padding:8px 18px;border-radius:999px;cursor:pointer;color:#444}
+nav button.on{background:#fff;color:var(--acc);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.bar2{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.seg{display:flex;flex-wrap:wrap;background:#e9e9e6;border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:8px;font:inherit;font-size:14px;font-weight:600;color:#555;cursor:pointer}
+.seg button.on{background:#fff;color:var(--acc);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg.big button{font-size:15px;padding:8px 16px}
+.tog{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#444;cursor:pointer;margin-left:auto}
+.tog input{width:18px;height:18px;accent-color:var(--acc)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid #ddd;background:#fff;border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;cursor:pointer;color:#444}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.cols{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
+@media(max-width:900px){.cols{grid-template-columns:1fr}aside{position:static!important;max-height:none!important}}
+main,aside,.card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:20px}
+aside{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.crumb{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+.goal{font-size:14px;color:#166534;background:var(--accbg);border-radius:8px;padding:8px 12px;margin:0 0 14px}
+.goal b{font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-right:6px}
+.say{font-size:20px;line-height:1.45;background:var(--ybg);border-left:5px solid var(--y);padding:12px 16px;border-radius:8px;margin:0 0 12px}
+.say.opt{background:var(--optbg);border-color:var(--opt);font-size:17px}
+.say.objection{background:#ecfdf5;border-color:#0f766e}
+.type-objection{color:#0f5f57;background:#cceee1}
+.tag{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin:2px 0 4px}
+.type{display:block;width:max-content;font-size:10px;line-height:1;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;padding:4px 6px;border-radius:4px}
+.type-say{color:#6b4f00;background:#ffe89a}
+.type-opt{color:#695500;background:#f7e8a9}
+.type-action{color:#1748a0;background:#dbeafe}
+.type-note{color:#4b5563;background:#e5e7eb}
+.cue{background:var(--bluebg);border-left:5px solid var(--blue);padding:10px 14px;border-radius:8px;color:#263c64;font-size:15px;margin:0 0 12px;line-height:1.4}
+.note{background:var(--gbg);border-left:5px solid var(--g);padding:10px 14px;border-radius:8px;font-size:15px;color:#444;margin:0 0 12px;line-height:1.4}
+.ph{color:#b45309;font-weight:600}
+.coach{border:1px solid #dbe4f5;background:#f5f8ff;border-radius:10px;padding:10px 14px;margin:4px 0;font-size:14px;line-height:1.4}
+.coach div{margin:6px 0}
+.coach b{color:#315fd1;font-size:11px;text-transform:uppercase;letter-spacing:.05em;display:block}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.go{font:inherit;font-size:16px;font-weight:600;padding:12px 18px;border-radius:10px;border:2px solid var(--acc);background:#fff;color:var(--acc);cursor:pointer}
+.go:hover,.go.rec{background:var(--acc);color:#fff}
+.ghost{font:inherit;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px;padding:6px 10px;cursor:pointer;margin-left:6px}
+.ghost:disabled{opacity:.4;cursor:default}
+aside h2{font-size:14px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em;color:#333}
+.gh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--acc);margin:14px 0 4px}
+.obs{display:flex;flex-direction:column;gap:6px}
+.ob{font:inherit;font-size:15px;text-align:left;padding:9px 12px;border:1px solid #e0e0e0;border-radius:9px;background:#fafafa;cursor:pointer;color:var(--ink)}
+.ob:hover{border-color:var(--acc)}
+.ob.on{border-color:var(--acc);background:var(--accbg);font-weight:600}
+.ans{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #eee}
+.ans .say{font-size:17px}
+.ans .q{font-weight:700;font-size:15px;margin:0 0 8px}
+.rulesbox{background:#fff5f5;border-left:5px solid #dc2626;border-radius:8px;padding:12px 16px;margin:0 0 12px}
+.rulesbox ul{margin:6px 0 0;padding-left:20px;font-size:15px;line-height:1.5}
+.brief{border:1px solid #e5e5e5;border-radius:12px;padding:14px;margin:6px 0 4px;background:#fcfcfb}
+.brief h3{margin:0 0 4px;font-size:16px}
+.brief p{margin:0 0 10px;font-size:14px;color:var(--mut)}
+.brief label{display:block;font-size:13px;font-weight:600;color:#333;margin:10px 0 4px}
+.brief textarea{font:inherit;font-size:14px;padding:8px 10px;border:1px solid #d4d4d4;border-radius:8px;color:var(--ink);width:100%;min-height:110px;resize:vertical}
+.brief textarea:focus,.brief select:focus{outline:2px solid var(--acc);border-color:transparent}
+.brief select{font:inherit;font-size:15px;padding:7px 9px;border:1px solid #d4d4d4;border-radius:8px}
+#cpOut{display:none;width:100%;min-height:160px;margin-top:8px;font:13px/1.4 ui-monospace,monospace;border:1px solid #d4d4d4;border-radius:8px;padding:8px}
+.sum{display:flex;flex-wrap:wrap;gap:6px 14px;background:#f0f7f5;border:1px solid #cfe5df;border-radius:10px;padding:8px 12px;margin:0 0 12px;font-size:14px}
+.sum details{flex-basis:100%;font-size:14px}
+.sum summary{cursor:pointer;color:var(--acc);font-weight:600}
+.sum pre{white-space:pre-wrap;font-family:inherit;margin:6px 0 0;color:#333;max-height:260px;overflow:auto}
+.legend{display:flex;justify-content:center;align-items:center;gap:8px 14px;flex-wrap:wrap;text-align:center;font-size:13px;color:var(--mut);margin-top:14px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin:0 4px 0 10px}
+.wrap{max-width:780px;margin:0 auto 14px}
+.front{font-size:23px;font-weight:700;margin:6px 0 10px;line-height:1.35}
+.count{font-size:13px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.pbar{height:6px;background:#eee;border-radius:99px;overflow:hidden;margin:8px 0 16px}
+.pbar div{height:100%;background:var(--acc);transition:width .25s}
+.done{text-align:center;padding:20px 0}
+.done h3{font-size:24px;margin:0 0 8px}
+.scen{background:#f0f4f1;border-radius:12px;padding:15px 16px;font-size:18px;font-weight:600;margin:10px 0 14px;line-height:1.4}
+.choice{display:block;width:100%;border:1px solid #e0e0e0;background:#fff;border-radius:10px;padding:12px 13px;text-align:left;cursor:pointer;font:inherit;font-size:16px;margin-bottom:8px;color:var(--ink)}
+.choice:hover{border-color:var(--acc)}
+.choice.right{border-color:#16a34a;background:#dcfce7}
+.choice.wrong{border-color:#dc2626;background:#fee2e2}
+.fb{margin-top:10px;padding:12px 14px;border-radius:10px;background:var(--gbg);font-size:15px}
+.rules{margin:0;padding-left:22px}
+.rules li{padding:9px 0;border-bottom:1px solid #eee;font-size:17px;line-height:1.4}
+.rules li:last-child{border:0}
+.sheetnav{position:sticky;top:0;z-index:5;background:rgba(247,247,245,.96);backdrop-filter:blur(8px);padding:8px 0;margin:-4px 0 12px}
+.sheetintro{font-size:14px;color:#334155;background:#f8fafc;border:1px solid #dbe4ee;border-radius:9px;padding:9px 12px;margin:0 0 12px}
+.sheetgroup{scroll-margin-top:72px;border-top:3px solid #d8e7e3;padding-top:14px;margin-top:20px}
+.sheetgroup:first-child{margin-top:0}
+.sheethead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.sheethead h2{font-size:19px;margin:0;color:#164e4a}
+.sheetstep{border:1px solid #e5e7eb;border-radius:11px;padding:14px;margin:0 0 12px;background:#fff}
+.sheetstep h3{font-size:15px;margin:0 0 9px;color:#334155}
+.sheetstep .goal{font-size:13px;padding:6px 9px;margin-bottom:9px}
+.sheetstep .say{font-size:17px;padding:9px 12px;margin-bottom:8px}
+.sheetstep .say.opt{font-size:16px}
+.sheetstep .cue,.sheetstep .note{font-size:14px;padding:8px 11px;margin-bottom:8px}
+.sheetstep .type{font-size:9px;margin-bottom:5px;padding:3px 5px}
+.offerstep h3{font-size:17px;color:#164e4a}
+.offerhint{font-size:14px;color:#475569;margin:0 0 10px;line-height:1.5}
+.offerresponse{margin:0 0 10px}
+.offerresponse .optionalbody{padding:12px}
+.offerresponse .optionalbody h4{font-size:14px;color:#334155;margin:14px 0 8px}
+.offerresponse .optionalbody h4:first-child{margin-top:0}
+.optionalstack{border:1px solid #ead78a;background:#fffdf5;border-radius:9px;margin:0 0 8px}
+.optionalstack summary{cursor:pointer;padding:10px 12px;font-size:13px;font-weight:800;color:#695500}
+.optionalstack[open] summary{border-bottom:1px solid #eee2ae}
+.optionalstack .optionalbody{padding:9px 10px 2px}
+.optionalstack.objectionstack{border-color:#b8d8d1;background:#f4faf8}
+.optionalstack.objectionstack>summary{color:#0f5f57}
+.optionalstack.objectionstack[open]>summary{border-color:#cfe5df}
+.responseitem{margin-bottom:12px}
+.responseitem .q{font-size:14px;font-weight:700;margin:0 0 8px}
+.sheetoptional{border:1px dashed #cbd5e1;border-radius:10px;margin:0 0 12px;background:#fafafa}
+.sheetoptional summary{cursor:pointer;padding:10px 13px;font-size:14px;font-weight:700;color:#475569}
+.sheetoptional .sheetstep{border:0;border-top:1px dashed #cbd5e1;border-radius:0;margin:0;background:#fff}
+.sheetoptional.offerobjection{border-color:#add8d2;background:#f0faf7}
+.sheetoptional.offerobjection summary{color:#0f766e}
+.sheetmain{width:100%;max-width:960px;margin:0 auto}
+.sectionobs{border:1px solid #cfe5df;background:#f4faf8;border-radius:11px;padding:12px 14px;margin:14px 0 4px}
+.sectionobs h3{font-size:14px;margin:0 0 3px;color:#0f5f57}
+.sectionobs>p{font-size:12px;color:var(--mut);margin:0 0 9px}
+.sectionobs .obs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:7px}
+.sectionobs .ob{background:#fff;font-size:14px;padding:8px 10px}
+.sectionobs .ans{background:#fff;border:1px solid #b8d8d1;border-radius:9px;padding:11px;margin:0 0 10px}
+.sectionobs .ans .say{font-size:16px}
+.anshead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.anshead .q{margin:0}
+@media(max-width:700px){.sheetnav .chip{font-size:12px;padding:5px 9px}.sheetstep{padding:11px}.sheetstep .say{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Closer Script</h1>
+    <nav>
+      <button id="mLive" class="on" onclick="setMode('live')">Live Call</button>
+      <button id="mTrain" onclick="setMode('train')">Training</button>
+    </nav>
+  </header>
+  <div class="bar2"><div class="seg big" id="leadSeg"></div></div>
+  <section id="live"></section>
+  <section id="train" hidden></section>
+  <div class="legend"><span><i style="background:var(--y)"></i>Say / ask</span><span><i style="background:var(--opt)"></i>Follow-up when needed</span><span><i style="background:var(--acc)"></i>Objection response</span><span><i style="background:var(--blue)"></i>Action</span><span><i style="background:var(--g)"></i>Note</span><span>[brackets] = fill in</span></div>
+</div>
+
+<script>
+// ---------- COACHING ----------
+const CO={
+open:{g:`Make sure they have time to talk.`,p:`Reactance · Pattern interrupt`,w:`People resist when they feel pushed. A small, easy choice lowers that resistance. "Bad time?" breaks the usual sales-call pattern.`,t:`Positive and playful. Sound glad to talk to them.`,a:`They agree to talk now or give a specific callback time.`,m:`Starting discovery while they're distracted.`},
+exp:{g:`Explain how the call works and get a clear yes-or-no agreement.`,p:`Upfront contract`,w:`Setting the agenda and asking for a straight answer up front makes it easier to get a real answer at the offer.`,t:`Relaxed and upfront.`,a:`They agree to give you a straight yes or no.`,m:`Skipping it and getting "let me think about it" at the offer.`},
+sit:{g:`Find the seller's main problem and show the agent you understand it.`,p:`Tactical empathy · Labeling · Mirroring`,w:`Listen for the main problem. Ask only what helps you understand it, then repeat it back in a few words.`,t:`Stay curious. Give them time to answer.`,a:`You know the seller's main problem and what they will do if the offer does not work.`,m:`Reading every question or moving on before you understand the problem.`},
+ssit:{g:`Learn what is going on with the property and the seller.`,p:`Tactical empathy · Active listening`,w:`Let the seller explain the situation first. Then ask about the details that matter.`,t:`Stay curious. Give them time to answer.`,a:`You understand the property situation and know what to ask next.`,m:`Interrupting or guessing what the problem is.`},
+dec:{g:`Know who decides and who can sign.`,p:`Commitment and consistency`,w:`People are more likely to complete a step they clearly agreed to in advance. Everyone on title has to sign.`,t:`Direct, neutral, matter-of-fact.`,a:`You know who's on title, who decides, and that they're on board.`,m:`Assuming one person can accept or sign for everyone.`},
+cond:{g:`Get clear property facts and ask for photos.`,p:`Priming · Specificity`,w:`Specific questions make them think through the systems and condition before the number comes up. It also gets them in "answering mode."`,t:`Curious, steady, detailed. Not accusatory.`,a:`Condition, systems, updates, risks, and photo status are documented.`,m:`Guessing repairs or promising a number from incomplete information.`},
+mot:{g:`Find the main reason they need to sell and what happens if they do not.`,p:`Tactical empathy`,w:`Their reason for selling tells you what matters most to them. You will need it when you discuss the offer.`,t:`Let them talk. Write down the main problem.`,a:`You know why they want to sell, how long it has been happening, and what happens if they do not sell.`,m:`Moving on after a short answer.`},
+urg:{g:`Learn who makes the decision and how the seller will review the offer.`,p:`Commitment and consistency`,w:`Knowing the decision process helps you get the offer in front of everyone who needs to see it.`,t:`Matter-of-fact.`,a:`You know who decides, who else is involved, and how the offer will be reviewed.`,m:`Skipping the decision process or treating it like an optional question.`},
+owe:{g:`Find out what is owed so you know whether a cash offer can work.`,p:`Specificity`,w:`Their payoff sets the floor. Without it you can't tell if the deal can work or if they're underwater.`,t:`Matter-of-fact. This is a normal question.`,a:`You know the rough payoff, whether they're current, and any auction date.`,m:`Skipping it and making an offer that can't cover their payoff.`},
+time:{g:`Find out when they want to close and why.`,p:`Gain framing · Loss framing`,w:`Gain framing shows the benefit of certainty. Loss framing shows the cost of waiting, but only when the facts support it.`,t:`Calm and neutral. Don't manufacture urgency.`,a:`You know the closing window and whether it's flexible.`,m:`Creating fake urgency or overstating consequences.`},
+price:{g:`Get their price without agreeing, arguing, or reacting.`,p:`Anchoring awareness · Third-party authority`,w:`Notice their number without agreeing to it. If they hold it back, use underwriting as the outside authority and explain why even a ballpark saves both sides time. Ask once more, then move on without pressure.`,t:`Flat and neutral. No surprise in your voice.`,a:`You have their number—or a documented refusal after one clean second attempt—plus enough facts to underwrite.`,m:`Reacting, arguing, making an offer during discovery, or repeatedly pressing for a number.`},
+frame:{g:`Explain the process before you talk about the offer.`,p:`Upfront contract · Pre-frame`,w:`Explaining the process before the number makes it feel safer. The "we work through it together" line plants the seed for a retrade, so it's not a surprise later.`,t:`Clear, confident, calm.`,a:`They understand the process and agree it's reasonable.`,m:`Making promises the company can't guarantee.`},
+end1:{g:`Set the exact day and time for the next call.`,p:`Commitment and consistency`,w:`An exact time turns "I'll get back to you" into a commitment.`,t:`Positive and specific.`,a:`Exact callback day and time set. Podio updated.`,m:`Leaving the follow-up open-ended.`},
+g1:{g:`Offer only when the lead passes the underwriting filter.`,p:`Decision discipline`,w:`This is an operating gate, not a persuasion tactic.`,t:`Internal. Use evidence, not emotion.`,a:`There's a possible deal and an approved opening offer and range.`,m:`Forcing a bad offer to hit the daily offer standard.`},
+g2:{g:`Deliver the approved number, get it presented, lock the follow-up.`,p:`Anchoring · Middle-man positioning · Silence`,w:`Underwriting is the authority, you're the messenger. The approved number becomes the reference point. Extra talking weakens it.`,t:`Late-night FM DJ voice. Calm, slow, downward inflection.`,a:`Offer sent, presentation confirmed, follow-up scheduled, or refusal documented.`,m:`Defending the number, filling silence, or moving because of a reaction.`},
+g3:{g:`Get the seller's real answer.`,p:`Commitment and consistency`,w:`A clear answer creates the next correct action. "I think" and "they need time" don't open negotiation.`,t:`Calm, exact, non-defensive.`,a:`Accepted, countered, rejected with no path, a specific issue, or another exact decision time.`,m:`Treating the agent's prediction or "they're thinking" as a counteroffer.`},
+g4:{g:`Work a real rejection or counter without giving away movement.`,p:`Loss aversion · Trade, don't give`,w:`First make the real alternative clear. If CHO moves on price or terms, get a signing commitment in return.`,t:`Direct and steady. No excitement about increasing price.`,a:`Agreement ready to sign, offer held with a clear next step, or no current path.`,m:`Inventing urgency, giving a free concession, or promising an unapproved number.`},
+anchor:{g:`Prepare them for the number, deliver it, and stop talking.`,p:`Anchoring · Tactical empathy · Silence`,w:`Preparing them softens the reaction. Silence after the number makes them respond first. If you keep talking, you negotiate against yourself.`,t:`Late-night FM DJ voice. Slow, calm, downward inflection. No uptalk.`,a:`They respond to the number.`,m:`Filling the silence or apologizing for the number.`},
+push:{g:`Get their number and a commitment before going back to underwriting.`,p:`Trade, don't give · Middle-man positioning`,w:`You're not the decision maker, so you never negotiate live. Get their number and a yes first.`,t:`On their side. Late-night FM DJ voice.`,a:`You have their number and a yes to moving forward if it's approved.`,m:`Moving on price during the call.`},
+alt:{g:`Pick the right way to stay in the deal when cash doesn't work.`,p:`Decision discipline`,w:`Time & Access keeps the same energy as a cash deal. The premium option is a separate pitch.`,t:`Internal decision.`,a:`You've picked the path that fits this seller.`,m:`Walking away from a seller whose price could work with a buyer.`},
+ta:{g:`Lock at their price with the same energy as a cash deal.`,p:`Consistency · No Plan B`,w:`Saying yes to their number with no backup pitch keeps trust. You close with them first, then find your buyer.`,t:`Same energy as a cash deal. Calm, no hesitation.`,a:`They agree, and you move straight to the agreement.`,m:`Pitching it like a backup plan or over-explaining.`},
+prem:{g:`Keep the deal alive when cash doesn't work.`,p:`Social proof (only if true)`,w:`When the cash number doesn't work, this keeps you in the deal.`,t:`Helpful, no pressure.`,a:`Agreement sent, or they decline.`,m:`Using stats or stories that aren't real.`},
+agree:{g:`Turn the yes into signatures and a complete Podio record.`,p:`Commitment and consistency`,w:`A verbal yes can drift unless the signing action and time are specific.`,t:`Positive, clear, fast to action.`,a:`Agreement signed or exact signing time set. Podio complete.`,m:`Treating a verbal yes as a signed contract.`},
+follow:{g:`Get a real answer on the offer.`,p:`Go for No · Boxing`,w:`"Still thinking" is usually a polite no. Going for no gets you the real objection so you can work it.`,t:`Calm and friendly. No pressure.`,a:`A yes, a real objection to work, a clear no, or an exact next time.`,m:`Accepting "still thinking" and hanging up.`},
+check:{g:`Keep the seller engaged and on track after signing.`,p:`Commitment and consistency`,w:`Sellers go quiet and second-guess after signing. Regular contact keeps the deal alive and gives them a good experience.`,t:`Positive and easy.`,a:`Photos received, walkthrough scheduled, no surprises.`,m:`Going silent until closing.`},
+rprep:{g:`Build this deal's retrade script before you dial.`,p:`Never freestyle`,w:`Every retrade follows the framework. The AI reads the dispo brief and the calls, then writes the script for this exact deal and person.`,t:`Internal.`,a:`You know dispo's ceiling and have chosen your number below it.`,m:`Calling without knowing where we're at, or freestyling the conversation.`},
+radv:{g:`Open as the person who fought for the deal.`,p:`#1 Advocate · Tactical empathy · Unity`,w:`You're delivering news from your team, not making a personal demand. It's you and them against the numbers.`,t:`Late-night FM DJ voice. Calm, not apologetic.`,a:`They know news is coming and that you fought for them.`,m:`Saying "We need you to come down."`},
+rfind:{g:`Walk through what changed, one piece at a time.`,p:`Specificity · Honesty`,w:`Findings are the reason for the number. New findings can't be argued. Scope findings need different language so they don't feel accused of hiding it.`,t:`Slow. Pause between each finding.`,a:`They've heard every finding before the number.`,m:`Rushing, or acting surprised by something they disclosed.`},
+rpre:{g:`Take the sting out before the number drops.`,p:`#8 Pre-handle · #4 Future pace`,w:`Acknowledging what they need shows you heard them without repeating another number on the call.`,t:`Calm and respectful.`,a:`Their need is acknowledged and they know you fought for it.`,m:`Repeating their old number or skipping the concern entirely.`},
+rnum:{g:`Choose and deliver your number, stack certainty, stop talking.`,p:`#5 Certainty · #7 Silence`,w:`Where we're at is dispo's ceiling, not an automatic spoken number. Choose your number below it. Certainty counterbalances the drop, and silence shows their real position.`,t:`Late-night FM DJ voice. Downward inflection.`,a:`They respond first.`,m:`Going at or above where we're at, naming other dollar amounts, or hinting there's room.`},
+rpush:{g:`Handle pushback with the principle that fits.`,p:`#2 Alternative uncertain · #3 Sunk cost · #4 Future pace · #5 Certainty`,w:`Use only what's true in this deal. Their own words from earlier calls are the strongest.`,t:`Calm. Don't fold on the first push.`,a:`The objection is handled and you're back to the close.`,m:`Arguing, over-explaining, or moving on price.`},
+racc:{g:`Hold the frame if they accuse you.`,p:`Rule 12 · Silence`,w:`The more you explain after an accusation, the guiltier you sound. Silence holds the frame.`,t:`One calm sentence. Then silence.`,a:`They move past the accusation.`,m:`Justifying, explaining the business model, or apologizing repeatedly.`},
+rcounter:{g:`Don't change your number on this call.`,p:`Rule 11`,w:`You choose the number you present below where we're at. If they counter, take it back to the team and end the call. Any new number comes from the team on a separate call and must also stay below the ceiling.`,t:`Calm. Short.`,a:`You're off the call without moving.`,m:`Hinting at room or trying to improve the number on the same call.`},
+rult:{g:`Match a real ultimatum calmly.`,p:`#6 Ultimatum · Loss aversion`,w:`The deal walking away is scarier than a lower price. Only works when it's real.`,t:`Calm. A tool, not a threat.`,a:`They re-engage, or you cancel.`,m:`Using it preemptively or bluffing.`},
+rclose:{g:`Put the ball in their court.`,p:`#10 Calibrated question · Commitment`,w:`When they propose the solution, they're committed to it.`,t:`Curious, calm.`,a:`Agreement, a counter to take back, an exact next time, or a clean no.`,m:`Ending without a clear next step.`},
+rhook:{g:`Leave the door open.`,p:`#9 Hook · Scarcity`,w:`They'll remember your offer when their alternative falls through.`,t:`Friendly. No hard feelings.`,a:`Relationship intact, next step logged.`,m:`Burning the relationship on the way out.`},
+rstr:{g:`Deliver the team's approved number on a separate call.`,p:`Rule 11 · #1 Advocate`,w:`Only the team can approve a new number after a counter. A separate call keeps the first number firm and makes any approved movement clear.`,t:`Late-night FM DJ voice.`,a:`They accept, take it to the seller, or it's a clean no.`,m:`Naming a new number before the team approves it or negotiating live.`}
+};
+
+// ---------- STEPS ----------
+const ST={
+// REALTOR · FIRST CALL
+r_open:{t:`Open`,c:`open`,l:[['s',`Hey [Name], this is [Your Name] — how's your day going?`],['c',`Wait`],['s',`I'll keep this quick. You were texting my team about [Address]. Probably caught you at a bad time?`],['o',`If they have time`,`Perfect, appreciate that.`]],b:[['Good time','r_sit'],['Bad time','r_bad']]},
+r_bad:{t:`Bad time`,c:`open`,a:'r_open',l:[['s',`No problem. When's better — later today or tomorrow?`],['c',`Set an exact day and time. Log it in Podio.`]],b:[['End call','_end']]},
+r_sit:{t:`Motivation`,c:`sit`,l:[['s',`What's going on with the seller's situation?`],['c',`Let them talk. Write down any move date, divorce, death, or money problems they mention.`],['n',`If the problem is already clear, do not force more questions. If you need more, choose one or two that fit what they said.`],['o',`Easy follow-up`,`Tell me a little more about that.`],['o',`If it has been going on for a while`,`How long has that been going on?`],['o',`If they live out of state`,`What's been hardest about managing the property from a distance?`],['o',`If tenants are the problem`,`What's been the biggest headache with the tenants?`],['o',`If you need to know what happens next`,`If they don't get an offer that works, what will they do?`],['s',`Sounds like the biggest issue is [tenants / managing it from out of state / a few words they used]. Is that right?`],['n',`Use a few words they already said. Do not create a new explanation.`]],b:[['They start opening up →','r_sitdeep'],['Agent is guarded','r_guard']]},
+r_sitdeep:{t:`Motivation: Go deeper & build rapport`,c:`sit`,a:'r_sit',l:[['n',`If the problem is already clear, do not force more questions. If you need more, choose one or two that fit what they said.`],['o',`Easy follow-up`,`Tell me a little more about that.`],['o',`If it has been going on for a while`,`How long has that been going on?`],['o',`If they live out of state`,`What's been hardest about managing the property from a distance?`],['o',`If tenants are the problem`,`What's been the biggest headache with the tenants?`],['o',`If you need to know what happens next`,`If they don't get an offer that works, what will they do?`],['s',`Sounds like the biggest issue is [tenants / managing it from out of state / a few words they used]. Is that right?`],['n',`Use a few words they already said. Do not create a new explanation.`]],b:[['Next →','r_dec']]},
+r_guard:{t:`Motivation: guarded`,c:`sit`,a:'r_sit',l:[['s',`Totally fair. I only ask because a lot of agents we work with share that upfront — helps us structure the offer around what the seller actually needs. But no pressure — let's talk about the property.`]],b:[['They open up →','r_sitdeep'],['Still guarded →','r_dec']]},
+r_dec:{t:`Urgency`,c:`urg`,l:[['s',`We're in a position to move quickly. If we can make the numbers work, what does the decision process look like on the seller's side? Is it one person making the decision, or does anyone else need to be involved?`],['o',`If one person makes the decision`,`Got it — that helps us know what to expect.`],['o',`If anyone else is involved`,`Got it. Will everyone have a chance to review the offer together?`],['o',`If they need to see the offer first`,`Understood. Let's see what we can do.`]],b:[['Next →','r_cond']]},
+r_cond:{t:`Property details`,c:`cond`,l:[['n',`Check the CRM first. If an answer is already there, confirm it instead of asking from scratch: “I have three bedrooms and two baths here — is that still correct?” Use the actual details in the CRM.`],['s',`Walk me through the property — what kind of shape is it in?`],['c',`Let them describe it first.`],['s',`What about the big stuff — roof, AC, water heater? Know the ages?`],['s',`And the basics — beds, baths, square footage?`],['s',`Any updates in the last few years?`],['s',`Solar? Owned or leased?`],['s',`Is there an HOA? How much, and what does it cover?`],['s',`Any structural issues or major red flags we should know about?`],['o',`If they don't know the roof, AC, or water heater ages`,`No worries — if you can find out, that helps. Those are the first things we check.`],['o',`If there's a pool`,`Pool working or need repairs?`],['o',`If it's a manufactured home`,`Single or double-wide? What year? City water or well? Septic — when was it last serviced?`],['o',`If it's septic or land`,`Has a soil test or perc test been done?`],['o',`If they mention problems`,`Good to know. That's why we buy as-is — so the seller doesn't have to deal with any of that.`],['c',`Before leaving this section, ask for photos if you do not have them.`]],b:[['Next →','r_time']]},
+r_time:{t:`Timeline`,c:`time`,l:[['s',`What's the timeline here — is there a date they're working toward?`],['o',`If they give a date`,`Okay, I've noted that.`],['o',`If they ask how soon we can close`,`We put 30 days in the agreement to give the title company or closing attorney time to clear everything, but we can close earlier once they give us the go-ahead.`],['o',`If no rush`,`Good — gives us room to make it easy on everyone.`],['n',`If they need a faster closing: we've closed in about 21 days. Confirm the timing with the title company or closing attorney before promising a date.`]],b:[['Next →','r_owe']]},
+r_owe:{t:`Mortgage & equity`,c:`owe`,l:[['s',`Is there a mortgage on the property? Roughly what do they owe?`],['c',`Write down the rough payoff. Don't react.`],['o',`If they ask why`,`Totally get it. We look at a lot of properties, and we just want to make sure there's enough equity before we make an offer. Even a rough payoff helps — about what do they owe?`],['o',`If they don't know or still won't share`,`No problem. If you can check with them before our offer call, that helps us avoid bringing something that won't work.`]],b:[['Next →','r_price']]},
+r_price:{t:`Price`,c:`price`,l:[['s',`Is there a number they have in mind?`],['s',`Once everyone has reviewed the offer, what's a realistic timeframe for a decision?`],['c',`Write their number down. Don't react.`],['o',`If they give a number`,`By the way. Is there flexibility there, or is that firm?`],['o',`After they give a number`,`Let me see what I can do. Send me some pictures and I'll take it to the underwriting team — see if we can make that work.`],['o',`If they won't give a number — one more try`,`Totally get it. We're looking at a few properties, and our underwriting team has a pretty tight range. I don't want either of us chasing something that's not close. Even a ballpark helps — where do the sellers need to be?`],['o',`If they still won't give a number`,`That's fine — we'll underwrite it based on the property's as-is condition and come back with what we can offer.`],['o',`If they say to come see it`,`We'd love to see it. We look at a lot of properties though, so we wait until we have an agreement in place before we send our team out. Tell you what — send me some pictures for now and let's see if we can get close on numbers.`]],b:[['Next →','r_frame']]},
+r_frame:{t:`Process`,c:`frame`,l:[['s',`Let me tell you how we work so there's no surprises.`],['s',`Once we agree on price, we sign an agreement. Our team does a quick walk-through to verify the condition. If everything checks out, we close on schedule.`],['s',`If something comes up that wasn't mentioned or we couldn't see from photos, we work through it together. No ghosting, no games — just communication.`],['s',`Sound fair?`],['o',`If they seem worried about a retrade`,`No, that's not how we operate. We worked with an agent last month who had the same concern — she'd been burned by investors before. We walked the property, everything matched what she told us, closed in 18 days. She sent us another deal last week.`]],b:[['Next →','r_dual']]},
+r_dual:{t:`Dual representation`,c:`dec`,l:[['s',`One more thing — we don't have an agent on our side. Would you be open to representing us on the offer?`],['o',`If yes`,`Great — we'll work directly with you then.`],['o',`If they ask about commission`,`We typically do 1% of the purchase price or a flat fee. We can work out the details when we get there.`],['o',`If they need to check`,`No problem — just let me know.`]],b:[['Next →','r_end1']]},
+r_end1:{t:`Close the first call`,c:`end1`,l:[['s',`Alright — I've got what I need. I'll get with my team and have something for you by [TIMEFRAME].`],['s',`Best email to send it to?`],['s',`Perfect. Talk soon, [Name].`],['c',`Set the exact day and time for the next call.`],['n',`Save the call notes in Podio.`],['n',`Before you make the offer, open the Four Gates and keep it beside this script. The script tells you what to say. The Four Gates tells you what to do next — from checking whether we should offer to getting the seller's answer and working the number.`]],b:[['Go to Offer Call →','@offer'],['End call','_end']]},
+// REALTOR · OFFER CALL
+r_g1:{t:`Reconnect`,c:`open`,l:[['s',`Hey [Name], it's [Your Name] with Cactus. Got a minute?`],['o',`If they have time`,`Good — I just got out of underwriting on [Address]. Got the numbers back.`],['o',`If it's a bad time`,`No problem — when works better?`]],b:[['Good time →','r_g2'],['Set callback','_end']]},
+r_g2:{t:`Process review`,c:`frame`,l:[['s',`Before I give you the number — quick reminder on how we work.`],['o',`If you already have photos`,`Once we agree, we sign, and our team does a quick walk-through to verify condition. Title works in the background. Once it all clears — we close and your client gets paid.`],['o',`If you don't have photos yet`,`Once we agree, we sign, get photos within 24 hours, and our team does a quick walk-through to verify condition. Title works in the background. Once it all clears — we close and your client gets paid.`],['s',`Simple.`]],b:[['Next →','r_g3']]},
+r_g2push:{t:`Agent reaction is not seller rejection`,c:`g2`,a:'r_g3',l:[['c',`Let them finish. Keep your tone calm. Knowing the seller’s asking price is not the seller’s answer to our offer. Do not negotiate against the agent’s reaction.`],['s',`Okay, I understand. Can you present it to them and let me know what they say?`],['s',`We had an agent who didn’t think her seller would take our offer either. But when she presented it, the seller opened up about personal issues she hadn’t known about—and told her to accept. The price was lower than they wanted, but our terms worked for what they were going through. She didn’t find that out until she presented our offer.`],['c',`Pause and let the agent respond. If they agree to present it, set the presentation and callback times. Do not raise the offer or add commission.`],['n',`Do not argue that the agent is missing information or promise the same result. If they refuse to present, use the refusal response. Gate 3 starts after the seller responds to this offer—not after a conversation about their asking price.`]],b:[['Seller already answered this offer','r_g3d'],['Seller gave a counter','r_g3c'],['Agent will present it','r_g2lock'],['Seller accepted','r_lock']]},
+r_g2lock:{t:`Presentation follow-up`,c:`g3`,a:'r_g3',l:[['s',`When will you be presenting it?`],['c',`Wait`],['s',`Great. I'll call you [day/time] to hear what they said.`],['n',`Log the offer and follow-up time in Podio.`]],b:[['Follow-up call →','r_g3d']]},
+r_g3:{t:`Deliver the number`,c:`g2`,l:[['n',`DON'T GIVE ANYTHING AWAY FOR FREE. Give the approved offer and wait. Don't volunteer commission, a higher price, or other concessions. Get a clear commitment before taking a change to the team for approval.`],['s',`So here's where we landed...`],['c',`Pause`],['s',`I'll be honest — I was hoping we'd be closer to what you wanted. I pushed on this one.`],['s',`The underwriting team came back at $[AMOUNT].`],['o',`Large-gap offer — use instead of the normal delivery`,`This is probably going to feel far from where your seller wants to be. Based on the as-is numbers, underwriting came back at $[AMOUNT].`],['c',`STOP TALKING — wait for the response`]],b:[['They agree','r_lock'],['Agent pushes back','r_g2push'],['Agent will present it','r_g2lock']]},
+r_g3c:{t:`Verify the counter`,c:`g3`,a:'r_g2push',l:[['s',`Did that counter come directly from the seller?`]],b:[['Yes, from the seller','r_g4c'],["No, agent's guess",'r_g3d']]},
+r_g3d:{t:`Get the seller's answer`,c:`g3`,a:'r_g3',l:[['n',`Use as soon as the seller has answered this offer—even on the first offer call. If the agent already gave the answer, use it; do not make them repeat it or ask them to present again.`],['s',`What exactly did the seller say?`],['n',`"Thinking" or the agent's guess is not a counteroffer. Keep the offer in place.`]],b:[['Accepted','r_lock'],['Countered','r_g3c'],['Rejected','r_g4'],['Still deciding','r_g2lock']]},
+r_g4:{t:`Work the seller’s answer`,c:`g4`,l:[['n',`Only after a real seller counter, rejection with a number, specific objection, or new information.`],['s',`Is it just the price, or is something else not working?`],['o',`If another term is the problem`,`If we solve that issue, does our price work?`],['o',`If the seller is firm on price`,`It sounds like the seller is pretty firm on that number. Help me understand what they’re looking at. Are there comps or upgrades that our underwriting team may have missed?`],['o',`If there is still a large gap`,`If they don’t get that price, what’s their plan for the property?`],['n',`Hold the offer without supporting information. Do not invent consequences or promise an increase.`]],b:[['Seller accepts current offer','r_lock'],['Review a real counter','r_g4c'],['No path','nodeal']]},
+r_g4c:{t:`Lock commitment`,c:`g4`,a:'r_g4',l:[['c',`Collect evidence: comps, photos, upgrades, repairs. A seller’s desired number alone is not proof of value.`],['s',`If we can get that approved, will everyone sign with everything else staying the same?`],['n',`If uncertain, hold the current offer and have the agent confirm. Do not invent a higher number. Keep the current offer until a new amount is approved.`],['c',`If they agree to the approved price, complete the final access check in Close before ending the call.`]],b:[["Yes, they're ready",'r_g4ap'],['No commitment','r_g3d']]},
+r_g4ap:{t:`Get final approval`,c:`g4`,a:'r_g4c',l:[['n',`Stay within the approved range. Anything above the ceiling goes back to underwriting. Promise nothing. Keep the current offer until a new amount is approved.`],['o',`Only after approval`,`The team approved $[AMOUNT]. If that works, let’s get the agreement signed.`]],b:[['Approved → Lock it','r_lock']]},
+r_lock:{t:`Lock it`,c:`agree`,l:[['s',`Done. Let me get final approval — one second.`],['c',`Confirm approval before naming the final number.`],['s',`Alright — we're good at $[AMOUNT]. Go ahead and write up the agreement, and once your seller signs we're off to the races.`],['o',`If they want us to write it`,`No problem, we'll get it written up.`],['s',`I'm sending over the offer form now. There's a section in red with the additional terms — make sure those get included when you write it up.`],['s',`And when do they want to close?`],['o',`If they ask how soon we can close`,`We put 30 days in the agreement to give the title company or closing attorney time to clear everything, but we can close earlier once they give us the go-ahead.`],['n',`Default to 30 days. If they need sooner, confirm the date with the title company or closing attorney before promising it. About 21 days is past experience, not a promise or a date to push.`],['c',`A 10-day inspection is standard. If they require 7 or 5 days, get photos before agreeing.`],['c',`Confirm they have pictures or will send them.`],['s',`Once this is signed, our team will reach out to coordinate pictures and the walk-through — everything we talked about.`]],b:[['Next →','r_agree']]},
+r_agree:{t:`Close`,c:`agree`,l:[['c',`Confirm who is signing and when.`],['s',`One last thing — how will our third-party team get in to confirm the condition? Is there a lockbox, or should we set a time to meet someone there?`],['o',`If there is a lockbox`,`Who can get us the lockbox location and code?`],['o',`If a lockbox will be installed`,`Who will set it up, and when will it be ready?`],['o',`If someone will let us in`,`What day and time works, and who will meet the team?`],['o',`If tenants live there`,`Who will coordinate access with the tenants and confirm that time works for them?`],['c',`Save the access plan and contact in Podio. Confirm the lockbox is ready or the entry appointment is set before sending the third-party team out.`],['s',`Perfect. Sending it over now. I'll follow up once it's signed. Thanks [Name] — talk soon.`],['n',`Log the offer in Podio and send the offer form.`]],b:[['Post-contract check-in','r_check'],['Done','_end']]},
+r_check:{t:`Post-contract check-in (Day 2–3)`,c:`check`,l:[['s',`Hey [Name] — just checking in. Our team should be reaching out to coordinate everything. Anything new on your end?`],['s',`Any changes with your client's timeline?`],['n',`Log the update in Podio.`]],b:[['Done','_end']]},
+nodeal:{t:`No deal today`,c:`g1`,l:[['n',`Record why in Podio. Keep the relationship for the next one.`]],b:[['End','_end']]},
+// DIRECT SELLER · FIRST CALL
+s_ch:{t:`Open`,c:`open`,l:[['n',`How did this lead come in?`]],b:[['Text','s_o_text'],['Direct mail','s_o_mail'],['PPC / online form','s_o_ppc'],['Inbound call','s_o_in'],['Cold call lead','s_o_cold']]},
+s_o_text:{t:`Open: Text`,c:`open`,a:'s_ch',l:[['s',`Hey [Name], this is [Your Name]. I saw you were texting about [Address]. How's it going?`],['c',`Wait`],['s',`Did I catch you at a bad time?`],['n',`Hold the company name until they ask.`],['o',`If they ask who you are`,`I work with a group that buys houses in the area.`]],b:[['Good time','s_exp'],['Bad time','s_bad']]},
+s_o_mail:{t:`Open: Direct mail`,c:`open`,a:'s_ch',l:[['s',`Hey [Name], this is [Your Name] with Cactus Home Offer. I saw you reached out about the mailer you got for [Address]. How's it going?`],['c',`Wait`],['s',`Did I catch you at a bad time?`]],b:[['Good time','s_exp'],['Bad time','s_bad']]},
+s_o_ppc:{t:`Open: PPC / online form`,c:`open`,a:'s_ch',l:[['s',`Hey [Name], this is [Your Name] with Cactus Home Offer. I saw you filled out a form online about [Address]. How's it going?`],['c',`Wait`],['s',`Did I catch you at a bad time?`]],b:[['Good time','s_exp'],['Bad time','s_bad']]},
+s_o_in:{t:`Open: Inbound call`,c:`open`,a:'s_ch',l:[['s',`Thanks for calling Cactus Home Offer, this is [Your Name]. Who am I speaking with?`],['c',`Get name`],['s',`Nice to meet you [Name]. What's the address of the property you're calling about?`],['c',`Get address`],['s',`Got it. Did I catch you at a bad time?`]],b:[['Good time','s_exp'],['Bad time','s_bad']]},
+s_o_cold:{t:`Open: Cold call lead`,c:`open`,a:'s_ch',l:[['s',`Hey [Name], this is [Your Name]. You spoke with [Caller] the other day about [Address]. How's it going?`],['c',`Wait`],['s',`Did I catch you at a bad time?`],['n',`The caller already confirmed the property details. Confirm what's in Podio instead of re-asking.`]],b:[['Good time','s_exp'],['Bad time','s_bad']]},
+s_bad:{t:`Bad time`,c:`open`,a:'s_ch',l:[['s',`No problem. When's better — later today or tomorrow?`],['c',`Set an exact day and time. Log it in Podio.`]],b:[['End call','_end']]},
+s_exp:{t:`Set expectations`,c:`exp`,l:[['s',`The goal of this call is to see if your property qualifies for an as-is cash offer. I'll ask you some questions — roof, AC, condition, that kind of stuff. Then I take it to our underwriter and see what it qualifies for.`],['s',`All I ask is when I come back with the number, you give me a straight yes or no. And no is totally fine — at least we both know where we stand. Fair enough?`],['c',`Wait`]],b:[['Next →','s_sit']]},
+s_sit:{t:`Situation`,c:`ssit`,l:[['s',`So what's going on with the property?`],['c',`Let them talk. Do not interrupt.`],['n',`They may talk about the property or a personal problem. Listen for the part that matters most. If they mention foreclosure, probate, divorce, or tenants, use the objections listed in this section.`]],b:[['Next →','s_cond']]},
+s_cond:{t:`Condition`,c:`cond`,l:[['s',`Walk me through the property. What's the condition like?`],['c',`Let them describe it first. Ask only for details they leave out.`],['o',`If they need prompting`,`How old is the roof? AC/Heat? Water heater? Any foundation issues? What about the kitchen and bathrooms — original or updated?`],['s',`I'm showing it's [beds] bed, [baths] bath, about [sq ft] square feet, built around [year]. Sound right? Anyone living there right now? Is it listed with an agent?`]],b:[['Next →','s_mot'],["It's land",'s_land']]},
+s_land:{t:`Condition: Land`,c:`cond`,a:'s_cond',l:[['s',`Tell me about the lot. What's the access like? Any utilities on site?`],['c',`Let them lead`],['o',`If they need prompting`,`Is it cleared or wooded? Any zoning restrictions? Flood zone? Perc test done?`]],b:[['Next →','s_mot']]},
+s_mot:{t:`Motivation`,c:`mot`,l:[['s',`Catch me up to speed — what's going on with the property and your situation?`],['c',`Let them talk. Write down the main problem and what happens if they do not sell.`],['o',`If they're guarded (use a real example)`,`I ask because we had a seller last month in a similar situation — dealing with [relate to what you know]. Once we understood what was going on, we were able to help them out. What's your situation?`],['s',`How long has this been going on?`],['s',`What happens if you don't sell?`],['s',`What are you planning to do once this is done?`]],b:[['Next →','s_urg']]},
+s_urg:{t:`Commitment`,c:`urg`,l:[['o',`Only say if true`,`We just sold a couple properties in your area and have some funds available to buy another one. Hopefully your house is a good fit for us.`],['s',`If we come to an agreement on a fair price, you're definitely ready to sell it?`],['c',`Wait for confirmation`]],b:[['Next →','s_dm']]},
+s_dm:{t:`Decision makers`,c:`dec`,l:[['s',`Is it just you on the title, or is there anyone else involved in the decision?`],['o',`If others are involved`,`Are they on board with selling? When's the last time you talked about it?`],['o',`If inherited`,`Has probate been opened? Who has authority to sign? Are the other heirs on board?`],['o',`If divorce`,`Are you both on the title? Are you both on board with selling?`]],b:[['Next →','s_owe']]},
+s_owe:{t:`Mortgage & liens`,c:`owe`,l:[['s',`Is there a mortgage or any liens on it? Roughly how much is owed?`],['c',`Write down the amount. Keep your voice neutral.`],['o',`If they ask why`,`Totally get it. We look at a lot of properties, and we just want to make sure there's enough equity before we make an offer. Even a rough payoff helps — about what do you owe?`],['o',`If they still won't share`,`No problem. Just know the payoff can affect whether an offer works.`],['s',`Are you current on payments?`],['o',`If they're behind`,`How far behind are you? Is there an auction date?`],['n',`If there is an auction date, tell management right away. We may be able to close before it if the numbers work.`]],b:[['Next →','s_time']]},
+s_time:{t:`Timeline`,c:`time`,l:[['s',`If we came to an agreement today, when would you ideally want to close?`],['c',`Wait`]],b:[['Next →','s_price']]},
+s_price:{t:`Price`,c:`price`,l:[['s',`In a perfect world, what were you hoping to walk away with?`],['c',`Wait — write it down`],['s',`And is that the best you can do, or is there some flexibility there?`]],b:[['Next →','s_end1']]},
+s_end1:{t:`Set the callback`,c:`end1`,l:[['s',`Alright [Name], I've got everything I need. Let me take this back to my team and run the numbers. I'll give you a call back — what's the best time to reach you?`],['c',`Set the exact day and time for the next call.`],['s',`Perfect. I'll call you [time]. Talk soon.`],['o',`If they can`,`Can you text me a few pictures of the inside? It helps me get you the most accurate number.`],['n',`If you already have an approved number, go to the Offer Call. Save the call notes in Podio.`]],b:[['Go to Offer Call →','@offer'],['End call','_end']]},
+// DIRECT SELLER · OFFER CALL
+s_g1:{t:`Gate 1: Should we offer?`,c:`g1`,l:[['n',`Pull ARV and repairs from Podio. Offer = 70% of ARV minus repairs.`],['n',`Check their payoff. If they owe more than the offer can cover, cash won't work.`],['n',`Is there a real reason this property could work for CHO?`]],b:[['Possible deal →','s_op'],['No deal','s_nodeal']]},
+s_nodeal:{t:`No deal today`,c:`g1`,a:'s_g1',l:[['n',`Record why in Podio.`],['n',`If they still want to sell, offer the realtor partner so they leave with help.`]],b:[['Offer realtor partner','s_ref'],['End','_end']]},
+s_op:{t:`Gate 2: Open the callback`,c:`frame`,l:[['s',`Hey [Name], this is [Your Name]. Good news — your property qualifies for what we're looking for.`],['c',`Pause`],['s',`I just spoke with our underwriter. Before I share what the property qualifies for, they asked me to walk you through what working with us looks like. That okay?`],['c',`Wait for yes`]],b:[['Next →','s_proc']]},
+s_proc:{t:`Gate 2: Process + value`,c:`frame`,l:[['s',`It's really straightforward. Once we agree on a number, we sign an agreement to get started. We get photos of the property, do a quick walkthrough to confirm condition, and title clears in the background. Once everything checks out, we close and you get paid. Usually 21–30 days, but we work with your timeline.`],['c',`Pause`],['s',`We buy it as-is. No repairs, no cleaning. We cover closing costs. No commission. You walk away clean.`],['s',`If something comes up at the walkthrough that wasn't mentioned or we couldn't see from photos, we work through it together. No ghosting, no games.`],['c',`Pause`],['s',`Any questions before we talk numbers?`],['n',`Common questions here (fees, closing date, staying after, moving money) are under Closing & move-out in the panel.`]],b:[['Next →','s_anc']]},
+s_anc:{t:`Gate 2: Prepare them for the number`,c:`anchor`,l:[['s',`So... [Name]... I gotta be honest with you.`],['c',`Sigh. Slow way down.`],['o',`If they have a situation (divorce, foreclosure, inherited, relocating)`,`I know you're dealing with [their situation]. And I really wanted to make this work for you.`],['o',`If it's just a beat-up house`,`I know the property needs a lot of work. And I really wanted to get you a number that made sense.`],['c',`Pause`],['s',`I went back and forth with underwriting on this... but the number just isn't where I was hoping it would be.`],['c',`Pause — let the tension build`]],b:[['Next →','s_del']]},
+s_del:{t:`Gate 3: Deliver the offer`,c:`anchor`,l:[['s',`They came back at $[AMOUNT].`],['c',`STOP. Say nothing. Let them respond.`]],b:[['Accepts','s_close'],['Pushes back on price','s_push'],['Needs to think / talk to someone','s_stall'],['Other pushback','s_other']]},
+s_stall:{t:`Gate 3: Stall`,c:`follow`,a:'s_del',l:[['s',`I totally get it. Usually when someone tells me that, it's really just a polite way of saying no. Is it a no?`],['c',`Pause`],['s',`Is it me? The process? The price? Or are you looking at other options?`],['o',`If they need to talk to someone`,`What do you think they're going to say about it? Are they available to jump on now?`]],b:[['Price','s_push'],['Ready now','s_close'],['Set a follow-up','f_set'],["It's a no",'f_lost']]},
+s_push:{t:`Gate 4: Price pushback`,c:`push`,l:[['s',`I completely understand. And look — I'm on your side here. This is what they authorized, but let me see if there's anything they can do.`],['c',`Pause`],['s',`Before I go back to them... where do you need to be to walk away happy?`],['c',`Get their number`],['s',`Is that the number I should take back to underwriting?`],['s',`If they can get there — are you ready to move forward today?`],['o',`If they won't budge (pause first)`,`Is this deal dead?`],['n',`Keep going back to underwriting. Come up little by little. Never negotiate live.`]],b:[['Gap closed','s_close'],["Cash still doesn't work",'s_alt']]},
+s_other:{t:`Gate 4: Other pushback`,c:`push`,a:'s_push',l:[['s',`Is it me? The process? The price? Or are you looking at other options?`],['n',`Find the answer in the objection panel under that box. For anything else, use the CHO Objection Handler GPT.`]],b:[['Back to the offer','s_del']]},
+s_alt:{t:`Gate 4: Cash doesn't work`,c:`alt`,l:[['n',`Time & Access: their price could work with a buyer, we can close first, and a separate pitch might turn them off.`],['n',`Premium option: they want their number and are open to us going to work for them.`],['n',`Neither works (for example, they owe more than any price we can do): offer the realtor partner.`]],b:[['Time & Access →','s_ta'],['Premium option →','s_prem'],['Realtor partner','s_ref']]},
+s_ta:{t:`Gate 4: Time & Access`,c:`ta`,a:'s_alt',l:[['s',`We can do that.`],['c',`Pause — let it land`],['s',`We just need time and access.`],['c',`Wait for response`],['o',`If they ask what that means`,`Time to close, and access to the property so we can confirm condition. That's all we need to get you that number.`],['n',`Same energy as a cash deal. No backup-option talk. No separate pitch.`]],b:[['Agrees → Close it','s_close']]},
+s_prem:{t:`Gate 4: Premium option`,c:`prem`,a:'s_alt',l:[['s',`I understand. We really like the property. It's the type of house we like to buy. I'd love to be able to help out here. It sounds like we're on the same page other than the price...`],['c',`Pause — let them confirm`],['s',`Look — you need to be at $[X]. I get it. So let us go to work for you.`],['o',`Only say if true`,`85% of the sellers we work with end up taking advantage of this. Our cash number doesn't work — so we just go find them a buyer who will pay their price.`],['s',`Here's the thing — our goal is to get you that number. But to do that, we need time and access to the property. All you need to do is sign the agreement, which gives us permission to go to work for you.`],['s',`Once we get that agreement, we start marketing. We leverage the MLS, tap into our network of buyers, and find someone who can actually pay what you're looking for.`],['s',`You don't do showings. You don't deal with buyers. You don't coordinate anything. We handle all of that. We just call you when we find the right one.`],['o',`Only use a real deal`,`We just did this a few weeks ago. Seller needed $180. Our cash offer was $140. Too far apart. We went to work for them — found a buyer at $175, handled the whole thing, they didn't have to do anything.`]],b:[['Agrees','s_pclose'],['Not interested','s_ref']]},
+s_close:{t:`Close it`,c:`agree`,l:[['s',`Alright, let me tell you what happens next.`],['s',`I'm going to send you a simple agreement. It locks in your price and gets us started.`],['s',`Once you sign, I need pictures of the property within 24 hours — inside and out. Then we schedule a quick walkthrough to confirm condition.`],['s',`After that, title clears everything in the background, and we close. You get your money.`],['s',`Before I send this over — is there anything that would stop you from moving forward once you sign?`],['c',`Wait. Handle anything they bring up now, not after they sign.`],['o',`If they've talked to other buyers`,`If anyone else reaches out after this, all I ask is that you call me first. Fair enough?`],['s',`What's the best email to send this to?`],['c',`Get email. Send the agreement while on the phone.`],['o',`If they want to review later`,`No problem. I'll follow up tomorrow if I don't hear from you. Sound good?`],['s',`Any questions before we hop off?`],['n',`Log everything in Podio. Set the Day 2–3 check-in (After Contract tab).`]],b:[['Done','_end']]},
+s_pclose:{t:`Close it: Premium`,c:`agree`,a:'s_close',l:[['s',`Alright, let me tell you what happens next.`],['s',`I'm going to send you a simple agreement. It gives us permission to market the property and find you a buyer.`],['s',`Once you sign, I need pictures of the property within 24 hours — inside and out. Then we schedule a quick walk-through so we can show it properly.`],['s',`After that, we go to work finding you a buyer. You get your money when we close.`],['s',`Before I send this over — is there anything that would stop you from moving forward once you sign?`],['c',`Wait. Handle anything they bring up now, not after they sign.`],['o',`If they've talked to other buyers`,`If anyone else reaches out after this, all I ask is that you call me first. Fair enough?`],['s',`What's the best email to send this to?`],['c',`Get email. Send the agreement while on the phone.`],['o',`If they want to review later`,`No problem. I'll follow up tomorrow if I don't hear from you. Sound good?`],['s',`Any questions before we hop off?`],['n',`Log everything in Podio. Set the Day 2–3 check-in (After Contract tab).`]],b:[['Done','_end']]},
+s_ref:{t:`Realtor partner referral`,c:`prem`,a:'s_alt',l:[['s',`Look, I want to help you out even if I'm not the right fit. I have a realtor partner who might be able to get you closer to what you need. Would you be open to me connecting you with them?`],['c',`If yes, make the intro`],['n',`Log it in Podio.`]],b:[['Done','_end']]},
+// DIRECT SELLER · FOLLOW-UP
+f_open:{t:`Follow-up: Open`,c:`follow`,l:[['s',`Hey [Name], it's [Your Name] with Cactus Home Offer. Wanted to follow up on the offer for [Address]. Where are you at?`],['c',`Wait`]],b:[['Ready to move forward','s_close'],['Still thinking','f_no'],['Price is the issue','s_push'],['Went with someone else','f_lost']]},
+f_no:{t:`Follow-up: Go for no`,c:`follow`,l:[['s',`I totally get it. Usually when someone needs more time, it's really a polite way of saying no. Is it a no?`],['c',`Pause`],['s',`Is it me? The process? The price? Or are you looking at other options?`],['n',`Use the objection panel for whichever box they name.`]],b:[['Price','s_push'],['Ready now','s_close'],['Needs more time','f_set'],["It's a no",'f_lost']]},
+f_set:{t:`Follow-up: Set the next time`,c:`follow`,l:[['s',`No problem. When will you have an answer for me?`],['c',`Get an exact day and time. Log it in Podio.`]],b:[['Done','_end']]},
+f_lost:{t:`Follow-up: Lost for now`,c:`follow`,a:'f_open',l:[['s',`I appreciate you letting me know. If it doesn't work out with the other option, call me. Can't promise this number holds, but I'll see what I can do.`],['n',`If they still need to sell and cash doesn't work, offer the realtor partner. Log the reason in Podio.`]],b:[['Offer realtor partner','s_ref'],['Done','_end']]},
+// DIRECT SELLER · AFTER CONTRACT
+c_open:{t:`Check-in (Day 2–3)`,c:`check`,l:[['s',`Hey [Name] — just checking in on [Address]. Wanted to make sure everything's moving on your end.`],['s',`Did you get a chance to send those pictures?`],['o',`If not`,`No problem — can you send them today? Inside and out.`]],b:[['Next →','c_walk']]},
+c_walk:{t:`Schedule the walkthrough`,c:`check`,l:[['s',`We're setting up the walkthrough. Our team goes out together at one time so it's just one visit. Does [day/time] work?`],['o',`If that time doesn't work`,`No problem, we can set up separate times.`]],b:[['Next →','c_change']]},
+c_change:{t:`Anything changed?`,c:`check`,l:[['s',`Anything new on your end? Is your timeline still the same?`],['s',`Title is working in the background. If they need anything from you, I'll let you know.`],['n',`Log the update in Podio. If they sound unsure, find out why now — don't wait for closing.`]],b:[['Done','_end']]}
+};
+
+// ---------- RETRADE INPUTS ----------
+const V={};
+const BF=[
+ ['dispo','1. Paste the Deal Adjustment Brief from dispo'],
+ ['disc','2. Paste the discovery call transcript'],
+ ['offer','3. Paste the offer call transcript']
+];
+const RTR=[
+ `Low and slow. Late-night FM DJ voice. Downward inflection, no uptalk.`,
+ `After every number, stop talking. Count to 15. They speak first.`,
+ `Dispo's "Where we're at" is the price ceiling. You decide the number you say — it must be below it.`,
+ `Do not say any other dollar amounts in your lines. Explain that the numbers came back different than what we had.`,
+ `If they counter, say "Let me take that back to my team." Then get off the call.`,
+ `Don't commit or move on this call. Any new number must come from the team on a separate call.`,
+ `Don't pretend you found something they disclosed. They'll see it instantly.`,
+ `Apologize once, max. Then move forward.`,
+ `Don't bring up their alternatives (listing, other buyers) unless they do.`,
+ `Don't reopen settled items like commission. Acknowledge and move on.`
+];
+
+// ---------- RETRADE (framework v1.5) ----------
+function mkRT(p,R){
+  const outs=[['Agrees',p+'done'],['Counters',p+'counter'],['Needs time',p+'talk'],["It's dead",p+'hook']];
+  const push=[['What specifically?',p+'spec'],[R?"Seller won't take it":"I won't take that",p+'wont'],['Counters',p+'counter'],['Accuses you',p+'acc'],['Other offer / will list',p+'alt'],['Money already put in',p+'sunk'],['Ultimatum: cancel',p+'ult'],[R?'Let me talk to the seller':'Needs to think',p+'talk'],['Agrees',p+'done']];
+  const st={};
+  st[p+'prep']={t:`Retrade: Build the script`,c:`rprep`,brief:1,l:[],
+    b:R?[['Run the call step by step →',p+'open']]:[['Run the call step by step →',p+'open'],['Time & Access opener →',p+'ta']]};
+  st[p+'open']={t:`Retrade: Open as advocate`,c:`radv`,l:[
+    ['s',`Hey [Name], it's [Your Name]. Got a minute? I went back to my team on [Address] because I didn't want to lose this deal, and I want to be straight with you.`],
+    ['c',`Let them respond`],
+    ['s',`I pushed on this one. The numbers came back different than what we had.`],
+    ['c',`Pause. Let it land.`]],b:[['Next →',p+'find']]};
+  st[p+'find']={t:`Retrade: Stack the findings`,c:`rfind`,l:[
+    ['o',`If it's new (they never mentioned it)`,`When our team walked it, we found [finding]. That wasn't something we could see in the photos.`],
+    ['o',`If it's scope (they told us, but the numbers changed)`,`You were upfront with us about [item], and we had that in our numbers. The numbers came back different than what we had.`],
+    ['o',`If it's mixed or you're not sure`,`You were upfront with us about most of this, and we had it in our numbers. The numbers came back different than what we had, and [finding] wasn't something we could see in the photos.`],
+    ['c',`One finding at a time. Pause between each.`],
+    ['n',`Never act surprised by something they disclosed.`]],b:[['Next →',p+'pre']]};
+  st[p+'pre']={t:`Retrade: Pre-handle`,c:`rpre`,l:[
+    ['o',`If they stated a floor`,R?`I know the seller has been clear about what they need, and I pushed for that.`:`I know you've been clear about what you need, and I pushed for that.`],
+    ['s',`But after where the numbers came back, this is where we are.`],
+    ['o',`Future pace (one sentence)`,`Anybody who walks this property is going to see the same things we found.`]],b:[['Next →',p+'num']]};
+  st[p+'num']={t:`Retrade: The number`,c:`rnum`,l:[
+    ['s',`We need to be at [YOUR NUMBER].`],
+    ['s',`We're cash, we close on schedule, everything else stays the same.`],
+    ['c',`SILENCE. Count to 15. They speak first.`],
+    ['n',`Your call — below where we're at in the Deal Adjustment Brief. Do not put any other dollar amount in your lines.`]],b:push};
+  st[p+'spec']={t:`Pushback: "What specifically?"`,c:`rpush`,a:p+'num',l:[
+    ['s',`The [biggest item] is the big one. Then [smaller items]. The numbers came back different than what we had.`],
+    ['n',`Short. Specific on the big item, general on the rest. Own the underwriting miss. Never blame them.`]],b:[['Next →',p+'close']]};
+  st[p+'wont']={t:R?`Pushback: "The seller won't take that"`:`Pushback: "I won't take that"`,c:`rpush`,a:p+'num',l:R?[
+    ['s',`Just present it to them with [close date / terms] in the picture. [their motivation]. Let them decide.`],
+    ['n',`Make the agent the messenger. Don't let them kill it before the seller sees it.`]]:[
+    ['s',`I hear you. You told me [their motivation]. At [YOUR NUMBER] with [close date / terms], you're done and moving on.`],
+    ['c',`Silence`]],b:[['Next →',p+'close']]};
+  st[p+'counter']={t:`Pushback: They counter`,c:`rcounter`,a:p+'num',l:[
+    ['s',`Let me take that back to my team.`],
+    ['n',`GET OFF THE CALL. Do not change your number. Any new number must come from the team on a separate call.`]],b:[['Second call (if approved) →',p+'str'],['End call','_end']]};
+  st[p+'acc']={t:`Pushback: Accused`,c:`racc`,a:p+'num',l:[
+    ['s',`I understand how it looks. The numbers just came back different than we expected.`],
+    ['c',`Silence. Don't justify, explain, or apologize again.`],
+    ['o',`If they press`,`I hear you. This is where the numbers landed.`],
+    ['o',`If they say "I told you about all of this"`,`You're right, you did. We had it in our numbers. The numbers came back different than what we had. I'm being straight with you instead of making something up.`],
+    ['o',`If they bring up what we said before`,`You're right, we said [what we said before]. That was before the walkthrough. What we found moved the numbers. That's exactly why we do it.`]],b:[['Next →',p+'close']]};
+  st[p+'alt']={t:`Pushback: Other offer or listing`,c:`rpush`,a:p+'num',l:[
+    ['o',`Competing offer`,`What did the other offer come in at? Have they done their inspection yet? Their number isn't real until they do.`],
+    ['o',`Listing`,`Listing it doesn't mean selling it. That's showings, financing, appraisals, and months of waiting.`],
+    ['o',`Use their own words`,`You told me yourself — [their words].`],
+    ['s',`Anybody who walks it is going to find the same things we did. We're cash, and we close on schedule.`],
+    ['c',`Silence`]],b:[['Next →',p+'close']]};
+  st[p+'sunk']={t:`Pushback: Money already put in`,c:`rpush`,a:p+'num',l:[
+    ['s',R?`I hear you. Whatever they already put into it is spent. It's gone whether they sell to us or hold it another year.`:`I hear you. Whatever you already put into it is spent. It's gone whether you sell to us or hold it another year.`],
+    ['c',`Pause`]],b:[['Next →',p+'close']]};
+  st[p+'ult']={t:`Pushback: Ultimatum`,c:`rult`,a:p+'num',l:[
+    ['n',`Only if they gave a specific ultimatum first. Never bluff.`],
+    ['s',`I'll send the cancellation. But before I do — can I ask you one thing?`],
+    ['c',`Pause`],
+    ['s',`What would it take to make this work?`]],b:outs};
+  st[p+'talk']={t:R?`"Let me talk to the seller"`:`Needs time`,c:`rclose`,a:p+'close',l:[
+    ['s',R?`Of course. When do you think you'll hear back?`:`No problem. When will you have an answer for me?`],
+    ['c',`Lock an exact time. Log it in Podio.`]],b:[['End call','_end']]};
+  st[p+'close']={t:`Retrade: Close`,c:`rclose`,l:[
+    ['s',`What would it take to make this work?`],
+    ['o',`Or`,`How do we get this across the finish line?`],
+    ['n',R?`If the agent is just a messenger and can't decide on the call, skip the question. Restate the number, stay silent, and lock a time.`:`Let them solve it. Silence after the question.`]],b:outs};
+  st[p+'hook']={t:`Retrade: Hook`,c:`rhook`,a:p+'close',l:[
+    ['s',`I understand. If things change, you've got my number. I can't guarantee this number will still be available.`],
+    R?['o',`Protect the relationship`,`And send me the next one — this is the first deal, not the last.`]:['c',`Stay friendly`],
+    ['n',`Log it in Podio.`]],b:[['Done','_end']]};
+  st[p+'done']={t:`Retrade: Agreed`,c:`rclose`,a:p+'close',l:[
+    ['n',`Send the updated agreement. Log the new price and the reason in Podio.`]],b:[['Done','_end']]};
+  st[p+'str']={t:`Retrade: Second call (team-approved number)`,c:`rstr`,l:[
+    ['n',`Use this only if the team approves a new number after the counter. The approved number must stay below where we're at. Never invent or imply movement.`],
+    ['s',`Hey [Name], I took your counter back to my team. They approved [TEAM'S APPROVED NUMBER]. That's the number the team approved.`],
+    ['c',`SILENCE`],
+    R?['s',`Can you take that to them?`]:['c',`Let them respond`]],b:[['Agrees',p+'done'],['Needs time',p+'talk'],["It's dead",p+'hook']]};
+  if(!R) st[p+'ta']={t:`Retrade: Time & Access buyer`,c:`rnum`,a:p+'num',l:[
+    ['o',`House`,`Hey [Name], I found a buyer. Good news — they want the property. But they're requesting more repairs than I expected. I still want to close with you and do the repairs for them, but I'm gonna need to be at [YOUR NUMBER] to make this work.`],
+    ['o',`Land`,`Hey [Name], I found someone who wants to build on this lot. Good news — they want it. But to make the deal work for them, I'm gonna need to be at [YOUR NUMBER].`],
+    ['n',`Your call — below where we're at in the Deal Adjustment Brief. Do not put any other dollar amount in your lines.`],
+    ['c',`SILENCE. Count to 15. They speak first.`]],b:push};
+  return st;
+}
+Object.assign(ST,mkRT('rr_',true),mkRT('sr_',false));
+const rtPath=p=>[[p+'prep','Build script'],[p+'open','Open'],[p+'find','Findings'],[p+'pre','Pre-handle'],[p+'num','Number'],[p+'close','Close'],[p+'str','Second call']];
+
+const CALLS={
+realtor:[
+ {k:'first',n:'First Call',s:'r_open',p:[['r_open','Open'],['r_sit','Motivation'],['r_dec','Urgency'],['r_cond','Property'],['r_time','Timeline'],['r_owe','Mortgage'],['r_price','Price'],['r_frame','Process'],['r_dual','Dual rep'],['r_end1','Close']]},
+ {k:'offer',n:'Offer Call',s:'r_g1',p:[['r_g1','Reconnect'],['r_g2','Process'],['r_g3','Offer'],['r_g2push','Pushback'],['r_lock','Lock It'],['r_agree','Close'],['r_check','Day 2–3']]},
+ {k:'retrade',n:'Retrade',s:'rr_prep',p:rtPath('rr_')}],
+seller:[
+ {k:'first',n:'First Call',s:'s_ch',p:[['s_ch','Open'],['s_exp','Expectations'],['s_sit','Situation'],['s_cond','Condition'],['s_mot','Motivation'],['s_urg','Commitment'],['s_dm','Decision'],['s_owe','Owed'],['s_time','Timeline'],['s_price','Price'],['s_end1','Callback']]},
+ {k:'offer',n:'Offer Call',s:'s_g1',p:[['s_g1','Gate 1'],['s_op','Open'],['s_proc','Process'],['s_anc','Prepare'],['s_del','Offer'],['s_push','Pushback'],['s_alt',"Cash doesn't work"],['s_close','Close']]},
+ {k:'follow',n:'Follow-up',s:'f_open',p:[['f_open','Open'],['f_no','Go for no'],['f_set','Next time']]},
+ {k:'after',n:'After Contract',s:'c_open',p:[['c_open','Check-in'],['c_walk','Walkthrough'],['c_change','Changes']]},
+ {k:'retrade',n:'Retrade',s:'sr_prep',p:rtPath('sr_')}]
+};
+
+// First calls stay on one compact sheet so closers can keep maps, comps, and CRM in view.
+const FIRST_FLOW={
+ realtor:[
+  {id:'open',n:'Opening',steps:[['r_open'],['r_bad','If it is a bad time']]},
+  {id:'situation',n:'Seller situation',steps:[['r_sit'],['r_dec']]},
+  {id:'property',n:'Property & numbers',steps:[['r_cond'],['r_time'],['r_owe'],['r_price']]},
+  {id:'close',n:'Process & close',steps:[['r_frame'],['r_dual'],['r_end1']]}
+ ],
+ seller:[
+  {id:'open',n:'Opening',steps:[['$open'],['s_bad','If it is a bad time'],['s_exp']]},
+  {id:'situation',n:'Situation & property',steps:[['s_sit'],['s_cond'],['s_land','If it is land'],['s_mot']]},
+  {id:'numbers',n:'Qualification & numbers',steps:[['s_urg'],['s_dm'],['s_owe'],['s_time'],['s_price']]},
+  {id:'close',n:'Callback',steps:[['s_end1']]}
+ ]
+};
+const SELLER_OPENS=['s_o_text','s_o_mail','s_o_ppc','s_o_in','s_o_cold'];
+const REALTOR_OFFER_FLOW=[
+ {id:'offer-check',n:'Gate 1 — Check the deal'},
+ {id:'offer-number',n:'Gate 2 — Present offer'},
+ {id:'offer-answer',n:'Gate 3 — Seller’s answer'},
+ {id:'offer-counters',n:'Gate 4 — Work the answer'},
+ {id:'offer-close',n:'Agreement & access'}
+];
+const OFFER_OB_MATCH={
+ 'offer-number':[`They're thinking. They need more time.`],
+ 'offer-counters':[`The seller will never take that.`]
+};
+const FIRST_OB_MATCH={
+ realtor:{
+  open:[],
+  situation:[],
+  property:[],
+  close:[]
+ },
+ seller:{
+  open:[`Who are you with`,`How did you get my information`,`Why do you want to buy my house`,`Is this a scam`,`How do I know you have the money`,`I read your reviews`,`Rude or hostile`,`Just send me an offer`,`I'm not interested, but`],
+  situation:[`Not sure what's really wrong`,`Inherited / probate`,`Divorce`,`Just come walk it`,`How can you make an offer without seeing it`,`You can pull all that online`,`I want to talk to my tenant first`],
+  numbers:[`Why do you need to know what I owe`,`Behind on payments`,`They owe more than our offer`,`I'm not taking any lowball offers`,`How did you come up with that number`,`Zillow says`,`My neighbor sold`,`Your offer is too low`,`I want to get the most money`,`Stuck — they won't budge`],
+  close:[`Just email me the offer`,`Will the price change after you walk it`,`How fast can you close`,`Can you close in a week`,`Do I pay anything`,`How much do I actually walk away with`,`Do I need a realtor or attorney`,`Can I stay a few weeks after closing`,`Can I get some money upfront to move`,`Can I leave stuff behind`,`I have nowhere to go once I sell`,`What if my tenants don't move out on time`,`Who's coming to the walkthrough`,`What if I change my mind`]
+ }
+};
+
+// ---------- OBJECTIONS (grouped) ----------
+const OB={
+realtor:[
+{h:'First call & offer',i:[
+ {q:`"I'm walking into an appointment. Just send me something."`,a:[['s',`No problem. When's better — later today or tomorrow?`],['c',`Set an exact time. Don't rush discovery.`]]},
+ {q:`"They just want to see what you'll offer."`,a:[['n',`Use after asking what's going on with the seller's situation, if the agent only asks for an offer or won't share why the seller is selling.`],...ST.r_guard.l]},
+ {q:`"It's in pretty good shape." (no details)`,a:[['s',`What about the big stuff — roof, AC, water heater? Know the ages?`],['c',`Ask for photos`]]},
+ {q:`"Why do you need to know their mortgage?"`,a:[['s',`Totally get it. We look at a lot of properties, and we just want to make sure there's enough equity before we make an offer. Even a rough payoff helps — about what do they owe?`],['o',`If they don't know or won't share`,`No problem. If you can check with them before our offer call, that helps us avoid bringing something that won't work.`],['n',`Ask once more, then move on. Don't pressure them.`]]},
+ {q:`"Just send your best offer. They won't give me a number."`,a:[['s',`Totally get it. We're looking at a few properties, and our underwriting team has a pretty tight range. I don't want either of us chasing something that's not close. Even a ballpark helps — where do the sellers need to be?`],['o',`If they still won't say`,`No problem. We'll underwrite it from the property's as-is condition and come back with what we can do.`],['n',`Ask once more, then move on. Don't pressure them.`]]},
+ {q:`"The seller will never take that."`,a:[['n',`The agent's prediction isn't the seller's answer. Hold the number.`],['s',`I hear you. Can you present it and let me know exactly what the seller says?`],['s',`When will you be presenting it?`]]},
+ {q:`"Send it over and I'll get back to you."`,a:[['s',`When will you be presenting it?`],['s',`Great. I'll call you [day/time] to hear what they said.`]]},
+ {q:`"They're thinking. They need more time."`,a:[['s',`Our offer stands. When will they be able to make their decision?`]]},
+ {q:`"I think they need more."`,a:[['n',`"I think" isn't a counter.`],['s',`What exactly did the seller say?`]]},
+ {q:`"They countered at $[X]."`,a:[['s',`Did that counter come directly from the seller?`],['s',`If we can get that approved, will everyone sign with everything else staying the same?`],['n',`Get approval before saying any new number.`]]}
+]},
+{h:'Retrade',i:[
+ {q:`"I told you about all of this."`,a:[['s',`You're right, you did. We had it in our numbers. The numbers came back different than what we had. I'm being straight with you instead of making something up.`]]},
+ {q:`"This is a bait and switch."`,a:[['s',`I understand how it looks. The numbers just came back different than we expected.`],['c',`Then silence. One sentence only.`]]},
+ {q:`"The seller won't take that."`,a:[['s',`Just present it to them with [close date / terms] in the picture. Let them decide.`]]},
+ {q:`"I can list it for more."`,a:[['s',`You could. But listing it doesn't mean selling it. Anybody who walks it is going to find the same things we did. We're cash, and we close on schedule.`]]},
+ {q:`They counter your number`,a:[['s',`Let me take that back to my team.`],['n',`Get off the call. Do not move. Any new number must come from the team on a separate call.`]]},
+ {q:`"We'll cancel."`,a:[['s',`I'll send the cancellation. But before I do — can I ask you one thing?`],['c',`Pause`],['s',`What would it take to make this work?`]]}
+]}],
+seller:[
+{h:'Start here',i:[
+ {q:`Not sure what's really wrong? Box it.`,a:[['s',`Is it me? The process? The price? Or are you looking at other options?`],['o',`After the agreement goes out, add`,`Is it the paperwork? Any questions about the paperwork?`]]}
+]},
+{h:'Situations',i:[
+ {q:`"Why do you need to know what I owe?"`,a:[['s',`Totally get it. We look at a lot of properties, and we just want to make sure there's enough equity before we make an offer. Even a rough payoff helps — about what do you owe?`],['o',`If they still won't share`,`No problem. Just know the payoff can affect whether an offer works.`],['n',`Ask once more, then move on. Don't pressure them.`]]},
+ {q:`Behind on payments / foreclosure`,a:[['s',`We can close before the auction date as long as the numbers work. When's the auction date, and how far behind are you?`],['n',`Flag it to management right away. The timeline is everything here.`]]},
+ {q:`Inherited / probate`,a:[['s',`We do probate deals all the time. Has probate been opened yet? Who has authority to sign?`],['o',`If there are other heirs`,`Are the other heirs on board with selling?`]]},
+ {q:`Divorce`,a:[['s',`Are you both on the title? Are you both on board with selling?`],['n',`Everyone on title has to sign.`]]},
+ {q:`They owe more than our offer`,a:[['n',`If the payoff is more than our cash number, cash won't work.`],['s',`Based on what's owed, our cash number won't get you where you need to be.`],['n',`If their price could work with a buyer, use Time & Access. If not, offer the realtor partner.`]]}
+]},
+{h:'Company',i:[
+ {q:`"Who are you with?"`,a:[['s',`We're Cactus Home Offer. We're active buyers here in [City].`],['o',`Text leads`,`I work with a group that buys houses in the area.`]]},
+ {q:`"How did you get my information?"`,a:[['s',`We have a marketing team that pulls information from public records in areas we like to buy in. Have you thought about selling?`]]},
+ {q:`"Why do you want to buy my house?"`,a:[['s',`We don't know yet if it's a fit for us. We buy in areas we're interested in, and I'm just seeing if you'd consider selling now or in the near future.`]]},
+ {q:`"Is this a scam?"`,a:[['s',`No. You never pay us anything, and everything closes through a third-party title company, same as any home sale. We're also BBB accredited, so you're welcome to look us up.`]]},
+ {q:`"How do I know you have the money?"`,a:[['s',`Fair question. I can send you proof of funds.`],['n',`Get the proof of funds from management.`]]},
+ {q:`"I read your reviews. How do I know you won't back out?"`,a:[['s',`Fair question. We can't make everyone happy, but as long as everything you've told us about the house checks out, we're confident we'll close.`]]},
+ {q:`Rude or hostile`,a:[['s',`Do you really want to hear what I have to say, or are you just tired of these phone calls?`]]}
+]},
+{h:'Process',i:[
+ {q:`"Just send me an offer." / "Get to the point."`,a:[['s',`I'd love to, but I don't know anything about your property yet. The more I know, the better offer I can make. Can I ask you a few quick questions?`]]},
+ {q:`"Just come walk it." / "Drive by it."`,a:[['s',`We'd love to. We look at a lot of properties though, so we wait until we have an agreement in place before we send our team out. Our questions are detailed enough to get you an accurate number without coming out.`]]},
+ {q:`"How can you make an offer without seeing it?"`,a:[['s',`We're active in this area, so we know it well. Based on the condition you've described and what similar homes sell for, we know the range we need to be at.`]]},
+ {q:`"You can pull all that online."`,a:[['s',`Public records are sometimes wrong or outdated, and they don't say anything about the roof, AC, or water heater. That's why I ask — so we can give you an accurate number.`]]},
+ {q:`"Just email me the offer."`,a:[['s',`I'll send it over, but I'd rather walk through it with you so I can answer any questions. When's a good time to go over it together?`]]},
+ {q:`"Will the price change after you walk it?"`,a:[['s',`Not if everything matches what we talked about. The walkthrough is just to confirm condition. If something comes up that wasn't mentioned or we couldn't see, we work through it together. No ghosting, no games.`]]}
+]},
+{h:'Price',i:[
+ {q:`"I'm not taking any lowball offers."`,a:[['s',`I hear that a lot. I don't come up with the numbers — once I have the details, I'll submit it, and if the property qualifies, we'll get you a real offer.`]]},
+ {q:`"How did you come up with that number?"`,a:[['s',`Underwriting looks at the condition you described, what it'll cost to fix, and what similar homes have sold for once they're fixed up. We buy as-is and cover closing costs, so all of that is built into the number.`]]},
+ {q:`"Zillow says it's worth $[X]."`,a:[['s',`Zillow isn't always accurate. It averages homes in a radius. We go off the year built, square footage, beds, baths, and the condition of your home.`],['o',`If they want that price`,`You could list it, but that could take 60 to 90 days, plus commissions and closing costs. If we buy it cash, we'd need to be at [price], and we take care of all those fees. Is that important to you?`]]},
+ {q:`"My neighbor sold for $[X]."`,a:[['s',`Was their house updated? A lot of those sales are remodeled homes sold with an agent. We're buying yours as-is and covering the costs, so we have to factor in what it takes to get it to that point.`]]},
+ {q:`"Your offer is too low."`,a:[['s',`I hear you. Where do you need to be?`],['s',`Is that the number I should take back to underwriting? If they can get there, are you ready to move forward today?`]]},
+ {q:`"I want to get the most money."`,a:[['s',`It sounds like you have a price in mind. What is it? And besides price, what matters most to you about how this sale goes?`],['n',`Listen for timing, certainty, convenience, or selling as-is.`]]},
+ {q:`Stuck — they won't budge`,a:[['c',`Pause`],['s',`Is this deal dead?`],['n',`Gives them space to say "No, we just need…" Now they're working toward a solution.`]]}
+]},
+{h:'Closing & move-out',i:[
+ {q:`"How fast can you close?"`,a:[['s',`We usually close in about 21 days. We put 30 on the agreement to give title room, and we close sooner if everything clears.`],['o',`If they need more time`,`That's fine — we work with your timeline.`]]},
+ {q:`"Can you close in a week?"`,a:[['s',`We can try. Title and paperwork usually take a bit, so let's put 30 days on paper and we'll close as soon as title clears.`]]},
+ {q:`"Do I pay anything? Any fees?"`,a:[['s',`No fees and no commission. We cover the closing costs. The only things that come out on your side are what you'd owe anyway: your mortgage payoff, any liens, and property taxes for the time you owned it.`]]},
+ {q:`"How much do I actually walk away with?"`,a:[['s',`The offer is the purchase price. From that, title pays off your mortgage, any liens, and your share of the property taxes. Whatever's left is yours. Title will send you a breakdown before closing.`]]},
+ {q:`"Do I need a realtor or attorney?"`,a:[['s',`You don't need a realtor — there's no commission here. The title company handles the paperwork and closing. You're always welcome to have an attorney look it over.`]]},
+ {q:`"Can I stay a few weeks after closing?"`,a:[['s',`We can work with that. Title holds $10,000 from your proceeds until you're moved out, then it's released to you.`],['n',`Agree on the move-out date in writing.`]]},
+ {q:`"Can I get some money upfront to move?"`,a:[['s',`That's something we can sometimes help with. How much would you need? Let me take it to management.`],['n',`Don't promise it. Escalate to management. The seller signs paperwork accepting the advance.`]]},
+ {q:`"Can I leave stuff behind?"`,a:[['s',`Absolutely. We buy it as-is, so take whatever you need and leave the rest. We'll handle it.`]]},
+ {q:`"I have nowhere to go once I sell."`,a:[['s',`We can move at your pace. As long as we agree on a price, we can work with you on the closing date. If you find a place sooner, we can close sooner.`],['o',`If they need time after closing`,`We can also let you stay after closing. Title holds $10,000 until you're moved out, then it's released to you.`]]},
+ {q:`"What if my tenants don't move out on time?"`,a:[['s',`Do you think they'll be a problem when you give notice? We can be flexible on closing to give them time. And if it comes to an eviction, we can help with that. We deal with tenants all the time.`]]},
+ {q:`"I want to talk to my tenant first."`,a:[['s',`Is there something your tenant could say that would change your decision to sell? Or have they shown interest in buying?`]]},
+ {q:`"Who's coming to the walkthrough?"`,a:[['s',`Our team goes out together at one scheduled time — contractors and whoever needs to see it — so it's just one visit. If that doesn't work for you, we can set separate times.`]]},
+ {q:`"What if I change my mind?"`,a:[['s',`If anything changes on your end, call me and we'll talk it through. Let's make sure you're comfortable with everything before you sign so it doesn't come to that.`],['n',`Don't bring up cancellation. If they ask directly whether they can cancel, be honest: yes.`]]}
+]},
+{h:'Other options',i:[
+ {q:`"I'm taking other offers."`,a:[['s',`Good, you should. How many offers are you taking? When are you making a decision?`],['s',`Is there a price that if I could get it approved, you'd give us the deal today and not go with anyone else?`]]},
+ {q:`"I'll list it with an agent."`,a:[['s',`That's an option. It might take 30, 60, 90 days, and you've got commissions, closing costs, repairs, and financing that can fall through. With us, it's as-is, no fees, and you pick the date.`]]},
+ {q:`"I'll just rent it out."`,a:[['s',`That makes sense. Just curious, what made you change your mind from selling to renting?`],['s',`What would be the deciding factor between selling and keeping it as a rental?`],['o',`If they're still leaning rental`,`Break down the math: $[rent] a month is $[rent × 12] a year. It would take [years] to get to our offer, which we can close in about 21 days.`]]},
+ {q:`"I'd rather fix it up myself."`,a:[['s',`You can do that. But it'll take time — repairs, then closing costs, fees, and commissions on the back end. If we buy it as-is, we take care of all of that.`]]},
+ {q:`"Someone offered me more." (after signing)`,a:[['s',`I appreciate you calling me first. What did they offer, and what are the terms? Is it cash, as-is, and are they covering closing costs? When can they close?`],['c',`Listen. Write it all down.`],['s',`A lot of offers look higher until you see the fees, the inspection, and whether they actually close. Let me take this to my team and see what we can do.`],['n',`Take it to management. Don't match or move on price without approval.`]]}
+]},
+{h:'Stalls',i:[
+ {q:`"I need to think about it."`,a:[['s',`I totally get it. Usually when someone tells me that, it's really just a polite way of saying no. Is it a no?`],['c',`Pause`],['s',`Is it me? The process? The price? Or are you looking at other options?`]]},
+ {q:`"I need to talk to my spouse / family."`,a:[['s',`No problem. Usually when someone tells me that, it's a polite way of saying no. Is it a no?`],['o',`If they say it's not a no`,`What do you think they're going to say about it?`],['o',`Or`,`Are they available to jump on the call now?`]]},
+ {q:`"I want my attorney / CPA to look at it."`,a:[['s',`No problem. My goal is for you to be 100% comfortable. I can send it to them directly — what's their email?`],['o',`If they want to send it themselves`,`When will you get it to them? When will they review it? When can we hop on a call to go over what they said?`]]},
+ {q:`"I'm in no rush."`,a:[['s',`I completely understand. What would change between today and next week?`],['o',`If they still want a callback`,`It sounds like you're not really interested in selling right now. If that's the case, I completely understand. But if you are, I'd love to help.`]]},
+ {q:`"I'm not interested, but…"`,a:[['s',`I appreciate that. It looks like you [filled out our form / reached out about the mailer]. I'm curious, what made you do that?`]]}
+]},
+{h:'Paperwork',i:[
+ {q:`"I'm not comfortable with some things in the contract."`,a:[['s',`No problem at all. What in the agreement can I clarify for you?`]]},
+ {q:`"Why is there an inspection period?"`,a:[['s',`We just need to get pictures and do a quick walkthrough to make sure the condition is what we talked about. If everything matches, your number doesn't change.`]]},
+ {q:`"Why is the earnest money so low?"`,a:[['s',`Our standard earnest money is 1% of the purchase price.`],['n',`If they ask for more, check with management before promising anything.`]]},
+ {q:`"I want to use my own title company."`,a:[['s',`Since we're covering all the closing costs and title fees, we use our preferred title company that we already work with.`],['o',`If they insist`,`I'd have to ask, and I can't guarantee we'd still cover all the costs since it's not a company we work with.`]]},
+ {q:`"Why is my house on the MLS?" (Time & Access)`,a:[['o',`House`,`Your number doesn't change. This time allows us to find our buyer. Some buyers want a full remodel, some just want a few updates. Instead of us guessing and spending $70K on repairs when they only needed $30K, we find out exactly what they want. That's how we're able to get you that higher number.`],['o',`Land`,`Your number doesn't change. This time allows us to find our buyer. Some buyers want a lot to build on, some want us to help them build. Instead of us guessing what they need, we find out exactly what they're looking for. That's how we're able to get you that higher number.`],['o',`If they push`,`The agreement you signed gives us permission to market it. This is how we work. Your number is locked.`]]}
+]},
+{h:'Retrade',i:[
+ {q:`"That's too big of a drop."`,a:[['s',`I hear you. Anybody who walks this property is going to see the same things we found. We're cash, we close on schedule, everything else stays the same.`],['c',`Silence`],['s',`What would it take to make this work?`]]},
+ {q:`"You're trying to lowball me."`,a:[['s',`I understand how it looks. The numbers just came back different than we expected.`],['c',`Then silence. One sentence only.`]]},
+ {q:`"I told you about all of this."`,a:[['s',`You're right, you did. We had it in our numbers. The numbers came back different than what we had. I'm being straight with you instead of making something up.`]]},
+ {q:`They counter your number`,a:[['s',`Let me take that back to my team.`],['n',`Get off the call. Do not move. Any new number must come from the team on a separate call.`]]},
+ {q:`"I'll just cancel."`,a:[['s',`I'll send the cancellation. But before I do — can I ask you one thing?`],['c',`Pause`],['s',`What would it take to make this work?`]]}
+]}
+]};
+
+// ---------- SCENARIOS ----------
+const SC={
+realtor:[
+ {st:`First call · Open`,x:`The agent says, "I'm walking into an appointment. Just send me something."`,c:[`Rush through the property questions.`,`Ask whether later today or tomorrow is better and set the exact time.`,`Send a blind offer.`],r:1,w:`Lower resistance and earn a real callback. Don't force discovery when the agent can't focus.`},
+ {st:`First call · Situation`,x:`The agent says, "They just want to see what you'll offer."`,c:[`Assume the seller isn't motivated.`,`Explain why the situation question matters and continue without pressure.`,`Skip to the offer.`],r:1,w:`Use tactical empathy. Don't invent motivation or skip discovery.`},
+ {st:`First call · Motivation depth`,x:`The agent says, "The seller lives out of state and is tired of dealing with the tenants."`,c:[`Acknowledge it and jump to price.`,`Ask every motivation question in order.`,`Mirror the tenant problem, ask what the biggest headache has been, then learn what happens if they don't get an offer that works.`],r:2,w:`Follow the thread they gave you. One reflection and one relevant question builds more rapport than a checklist.`},
+ {st:`First call · Condition`,x:`The agent says the property is "pretty good" but has no photos or system ages.`,c:[`Use light repairs.`,`Ask specific condition questions and request photos.`,`Promise a number and verify later.`],r:1,w:`"Pretty good" isn't evidence. Turn the description into facts before underwriting.`},
+ {st:`First call · Mortgage`,x:`The agent asks, "Why do you need to know what they owe?"`,c:[`Say it's required and keep pressing.`,`Explain briefly that you need to confirm there is enough equity before making an offer, ask once more for a rough payoff, then move on if they don't know or won't share.`,`Skip the mortgage question completely.`],r:1,w:`Keep it short and practical. A rough payoff prevents an offer that cannot cover what the seller owes.`},
+ {st:`First call · Price`,x:`The agent says, "Just send your best offer. The seller won't give me a number."`,c:[`Skip the question and guess what might work.`,`Keep pressing until the agent gives you a number.`,`Briefly explain that the underwriting team has a tight range, ask for even a ballpark once more, then move on if they still decline.`],r:2,w:`Use third-party authority to make one clean second attempt. The goal is to see whether you're close enough to keep working—not to pressure the agent.`},
+ {st:`Offer call · Deliver`,x:`The agent says, "The seller will never take that."`,c:[`Ask what number would work.`,`Increase the offer slightly.`,`Ask the agent to present it and schedule the exact follow-up.`],r:2,w:`The agent's prediction isn't the seller's answer. Hold the number and get it presented.`},
+ {st:`Offer call · Follow-up`,x:`The agent says, "Send it over and I'll get back to you."`,c:[`Send it and wait.`,`Ask when it will be presented and set the callback time.`,`Ask whether the seller will take more.`],r:1,w:`Lock the clock. Every offer needs a presentation plan and an exact follow-up.`},
+ {st:`Offer call · Get the answer`,x:`The agent says, "They're thinking and need more time."`,c:[`Improve the offer to create urgency.`,`Keep the offer in place and schedule the next decision time.`,`Move straight to negotiation.`],r:1,w:`"Thinking" isn't a counteroffer. Keep the offer in place and get an exact next time.`},
+ {st:`Offer call · Lock commitment`,x:`The seller countered at $195K. Your approved range may reach $185K.`,c:[`Offer $185K immediately.`,`Split the difference.`,`Ask if everyone will sign at $185K, then get approval.`],r:2,w:`Trade, don't give. Test commitment first, then get approval before moving.`},
+ {st:`Retrade · Closer-chosen number`,x:`You present your chosen number below where we're at. The agent counters higher.`,c:[`Say "Let me see what I can do" and push your team while on the phone.`,`Say "Let me take that back to my team," and get off the call.`,`Meet in the middle.`],r:1,w:`Rule 11: do not change your number live. Any new number must come from the team on a separate call and remain below where we're at.`},
+ {st:`Retrade · Accused`,x:`The agent says, "This is a bait and switch. You guys do this every time."`,c:[`Explain your business model and how underwriting works.`,`Say "I understand how it looks. The numbers just came back different than we expected." Then stay silent.`,`Apologize and offer to split the difference.`],r:1,w:`Rule 12: one sentence, then silence. The more you explain, the guiltier you sound.`},
+ {st:`Retrade · Findings`,x:`The agent disclosed the water damage on day one, but the repair numbers came back different than expected.`,c:[`Act like you just discovered the water damage.`,`Acknowledge they told you, say the numbers came back different than what you had, and own the miss.`,`Blame the agent for underselling it.`],r:1,w:`Scope retrades need different language. Never act surprised by something they disclosed or quote repair dollars.`},
+ {st:`Lock It`,x:`The seller verbally accepted, but no one has said who will sign or when.`,c:[`Mark it under contract.`,`Send the agreement now and confirm the signer and signing time.`,`Wait for the agent to contact you.`],r:1,w:`A verbal yes isn't a signed contract. Turn the commitment into an exact action.`}
+],
+seller:[
+ {st:`First call · Open`,x:`The seller answers, "Just tell me what you'll pay for it."`,c:[`Give a ballpark from Zillow.`,`Tell them you need to know about the property first, then ask a few quick questions.`,`Tell them to call back when they're serious.`],r:1,w:`You can't give a real number blind. The more you know, the better the offer.`},
+ {st:`First call · Owed`,x:`The seller says they're four months behind on payments.`,c:[`Move on to timeline.`,`Ask if there's an auction date, write it down, and flag it to management right away.`,`Tell them you can definitely save their house.`],r:1,w:`An auction date sets the whole timeline. We can close before it if the numbers work, but never promise before underwriting.`},
+ {st:`First call · Price`,x:`The seller says, "I need $300K." The house needs a full rehab.`,c:[`Tell them that's way too high.`,`Write it down, stay neutral, and ask if there's flexibility.`,`Offer $200K right now.`],r:1,w:`Get their number without accepting or fighting it. Never make an offer during discovery.`},
+ {st:`Offer call · Deliver`,x:`You deliver the number. The seller goes quiet.`,c:[`Explain how you got to the number.`,`Stay silent and let them respond.`,`Say you might be able to do a little more.`],r:1,w:`Silence after the number makes them respond first. Filling it weakens the offer.`},
+ {st:`Offer call · Pushback`,x:`The seller says, "That's way too low. I need at least $250K."`,c:[`Go up $10K on the spot.`,`Ask if that's the number to take back to underwriting and if they're ready to move forward if you get there.`,`Tell them the market doesn't support it.`],r:1,w:`Never negotiate live. Get their number and a commitment, then go back to underwriting.`},
+ {st:`Offer call · Stall`,x:`After you deliver the offer, the seller says, "I need to think about it."`,c:[`Say "Sure, call me whenever."`,`Go for no, then box it: me, the process, the price, or other options?`,`Raise the offer.`],r:1,w:`"Think about it" is usually a polite no. Go for no, then find the real box.`},
+ {st:`Offer call · Other options`,x:`The seller says, "I'm taking a few other offers."`,c:[`Tell them your offer is the best they'll get.`,`Encourage it, ask how many and when they'll decide, then ask if there's a price that gets you the deal today.`,`Drop your price early to compete.`],r:1,w:`Encourage competition, learn their timeline, and lock the commitment with the premium price question.`},
+ {st:`Offer call · Moving money`,x:`The seller says, "I'll do it, but I need $2,000 upfront to move."`,c:[`Say yes to lock the deal.`,`Ask how much they need and tell them you'll take it to management.`,`Tell them you can't do that.`],r:1,w:`We can sometimes advance moving money, but it goes through management and the seller signs paperwork. Never promise it yourself.`},
+ {st:`Offer call · Cash doesn't work`,x:`You're still $40K apart after going back to underwriting. Their price could work with a buyer, and you can close first.`,c:[`End the call.`,`Say "We can do that. We just need time and access."`,`Keep pushing the cash number.`],r:1,w:`Time & Access: say yes to their price with the same energy as a cash deal. No backup pitch.`},
+ {st:`After contract · Time & Access`,x:`The seller calls upset: "Why is my house on the MLS?"`,c:[`Apologize and take it down.`,`Tell them their number doesn't change, and the time lets you find the buyer and tailor the repairs.`,`Tell them not to worry about it.`],r:1,w:`Their number is locked. The listing is how you find the buyer instead of guessing on repairs.`},
+ {st:`Retrade · Closer-chosen number`,x:`You present your chosen number below where we're at. The seller counters higher.`,c:[`Say yes to save the deal.`,`Say "Let me take that back to my team," and get off the call.`,`Say "Let me see what I can do" and keep negotiating.`],r:1,w:`Rule 11: do not change your number live. Only return with a below-ceiling number if the team approves it.`},
+ {st:`Retrade`,x:`The walkthrough found nothing new, but you'd like a lower price.`,c:[`Retrade anyway.`,`Hold the price. Only retrade on specific issues you actually found.`,`Tell them the market changed.`],r:1,w:`A retrade has to be based on specific findings. Otherwise it breaks the "no games" promise you made on the first call.`}
+]};
+
+const RU=[
+`Follow the process. Know your stage and hit its goal before moving on.`,
+`Set expectations before the offer, including the pre-frame: "If something comes up, we work through it together."`,
+`After any number, stop talking.`,
+`Underwriting is the authority. You're the messenger.`,
+`Every offer gets a presentation plan: who presents it and when.`,
+`Lock every follow-up to an exact day and time.`,
+`Agent reaction is not seller rejection.`,
+`Verify every counter came directly from the seller.`,
+`No free movement. Only move for a real counter, new evidence, or a commitment in return.`,
+`Photos within 24 hours of signing. No exceptions.`,
+`Check in with every seller on Day 2–3 after signing.`,
+`Never freestyle a retrade. Only retrade on real findings, and follow the framework.`,
+`"Where we're at" is dispo's ceiling. Choose your spoken number below it. Counter? "Let me take that back to my team." Get off the call.`,
+`If accused, one sentence, then silence.`,
+`No unapproved promises: price, moving money, holdbacks, or terms. Take it to management.`,
+`Only say things that are true: stats, stories, deadlines, funds.`,
+`Complete the Podio record before leaving the lead.`
+];
+
+// ---------- STATE ----------
+let mode='live',lead='realtor',ci=0,cur='r_open',hist=[],coachOn=false,ao=-1;
+let tsub='cards',deck=null,pile=[],shown=false,tot=0,si=0,sok=0,sat=0,sans=-1;
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fill=x=>esc(x).replace(/\[([^\]]+)\]/g,(m,t)=>'<span class="ph">['+t+']</span>');
+// Presentation metadata: keep the approved spoken text and required/optional status intact.
+const objectionLines=new WeakSet();
+const objectionOptions={
+  r_dec:[`If they need to see the offer first`],
+  r_owe:[`If they ask why`,`If they don't know or still won't share`],
+  r_price:[`If they won't give a number — one more try`,`If they still won't give a number`,`If they say to come see it`],
+  r_frame:[`If they seem worried about a retrade`],
+  r_g1:[`If it's a bad time`],
+  s_mot:[`If they're guarded (use a real example)`],
+  s_owe:[`If they ask why`,`If they still won't share`],
+  s_close:[`If they want to review later`],
+  s_pclose:[`If they want to review later`]
+};
+const objectionSteps=new Set(['r_bad','r_guard','r_g2push','r_g4','s_bad','s_stall','s_push','s_other']);
+for(const p of ['rr_','sr_'])for(const suffix of ['wont','counter','acc','alt','sunk','ult','talk'])objectionSteps.add(p+suffix);
+for(const [id,step] of Object.entries(ST)){
+  for(const L of step.l){
+    if((L[0]==='s'||L[0]==='o')&&(objectionSteps.has(id)||(L[0]==='o'&&(objectionOptions[id]||[]).includes(L[1]))))objectionLines.add(L);
+  }
+}
+const routineResponseTriggers=[
+  `It's in pretty good shape`, `Behind on payments / foreclosure`, `Inherited / probate`, `Divorce`, `They owe more than our offer`,
+  `Who are you with?`, `How did you get my information?`, `Why do you want to buy my house?`,
+  `Will the price change after you walk it?`, `How did you come up with that number?`,
+  `How fast can you close?`, `Can you close in a week?`, `Do I pay anything?`, `How much do I actually walk away with?`,
+  `Do I need a realtor or attorney?`, `Can I stay a few weeks after closing?`, `Can I get some money upfront to move?`,
+  `Can I leave stuff behind?`, `I have nowhere to go once I sell.`, `What if my tenants don't move out on time?`,
+  `Who's coming to the walkthrough?`, `What if I change my mind?`, `Why is there an inspection period?`
+];
+function isObjectionResponse(o){return !routineResponseTriggers.some(q=>o.q.includes(q));}
+for(const groups of Object.values(OB))for(const group of groups)for(const o of group.i){
+  if(isObjectionResponse(o))for(const L of o.a)if(L[0]==='s'||L[0]==='o')objectionLines.add(L);
+}
+function line(L){
+  const k=L[0];
+  if((k==='s'||k==='o')&&objectionLines.has(L))return '<p class="say objection'+(k==='o'?' opt':'')+'"><span class="type type-objection">Objection response</span>'+(k==='o'?'<span class="tag">'+esc(L[1])+'</span>':'')+fill(L[k==='o'?2:1])+'</p>';
+  if(k==='s')return '<p class="say"><span class="type type-say">Say</span>'+fill(L[1])+'</p>';
+  if(k==='o')return '<p class="say opt"><span class="type type-opt">Optional</span><span class="tag">'+esc(L[1])+'</span>'+fill(L[2])+'</p>';
+  if(k==='c')return '<p class="cue"><span class="type type-action">Action</span>'+esc(L[1])+'</p>';
+  return '<p class="note"><span class="type type-note">Note</span>'+fill(L[1])+'</p>';
+}
+const calls=()=>CALLS[lead], C=()=>calls()[ci];
+const flatOb=()=>OB[lead].flatMap(g=>g.i);
+const $=id=>document.getElementById(id);
+const isRT=id=>/^(rr_|sr_)/.test(id);
+
+function setMode(m){mode=m;$('mLive').classList.toggle('on',m==='live');$('mTrain').classList.toggle('on',m==='train');$('live').hidden=m!=='live';$('train').hidden=m!=='train';render()}
+function setLead(l){lead=l;ci=0;startCall();deck=null;si=0;sok=0;sat=0;sans=-1;render()}
+function setCall(i){ci=i;startCall();render()}
+function startCall(){cur=C().s;hist=[];ao=-1}
+function go(to){
+  if(to==='_end'){startCall();return render()}
+  if(to==='@offer'){ci=calls().findIndex(c=>c.k==='offer');startCall();return render()}
+  hist.push(cur);cur=to;render();window.scrollTo({top:0,behavior:'smooth'})
+}
+function jump(id){if(id!==cur){hist.push(cur);cur=id;render()}}
+function back(){if(hist.length){cur=hist.pop();render()}}
+function so(i){ao=ao===i?-1:i;render()}
+function setB(k,v){V[k]=v}
+function clearBrief(){for(const k in V)delete V[k];render()}
+
+function rulesBox(){
+  return '<div class="rulesbox"><div class="tag" style="color:#b91c1c">Before you dial — every retrade</div><ul>'+RTR.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul></div>';
+}
+function briefForm(){
+  let h=rulesBox();
+  h+='<div class="brief"><h3>Build this deal\'s script</h3><p>Paste all three, click <b>Copy for AI</b>, and paste into ChatGPT, Claude, or Gemini. The AI pulls "Where we\'re at" and the other deal facts from dispo\'s brief, then reads the calls to figure out what they disclosed, what\'s new, and how to handle this person.</p>';
+  h+=BF.map(([k,l])=>'<label>'+esc(l)+'</label><textarea oninput="setB(\''+k+'\',this.value)">'+esc(V[k]||'')+'</textarea>').join('');
+  h+='<label>Retrade type</label><select onchange="setB(\'rtype\',this.value)"><option value="walk"'+(V.rtype!=='ta'?' selected':'')+'>Walkthrough / contractor findings</option><option value="ta"'+(V.rtype==='ta'?' selected':'')+'>Time &amp; Access — buyer needs more repairs</option></select>';
+  h+='<div class="btns"><button class="go rec" onclick="copyPrompt()">Copy for AI</button><button class="ghost" style="margin:0" onclick="clearBrief()">Clear</button></div>';
+  h+='<p id="cpMsg" style="margin:8px 0 0">If a transcript isn\'t available, leave that box empty. The AI will mark anything it needs as [MISSING].</p>';
+  h+='<textarea id="cpOut" readonly></textarea></div>';
+  return h;
+}
+function copyPrompt(){
+  const t=buildPrompt(),o=$('cpOut'),m=$('cpMsg');
+  o.value=t;o.style.display='block';o.focus();o.select();
+  let done=false;
+  try{done=document.execCommand('copy')}catch(e){done=false}
+  const ok=()=>{m.innerHTML='<b style="color:#166534">✓ Copied the full script request ('+t.length.toLocaleString()+' characters).</b> Paste it into your AI. It should start with "You are writing a retrade call script for Cactus Home Offer."'};
+  const fb=()=>{o.focus();o.select();m.innerHTML='<b style="color:#b91c1c">Your browser blocked the copy.</b> Click inside the box below, press Cmd/Ctrl + A, then Cmd/Ctrl + C, and paste that into your AI.'};
+  if(done){ok();return}
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();
+}
+function buildPrompt(){
+  const R=lead==='realtor';
+  const val=k=>(V[k]||'').trim()||'Not provided';
+  return `You are writing a retrade call script for Cactus Home Offer (CHO), a company that buys houses. Follow every instruction exactly. Do not add sections, rename sections, or skip sections.
+
+WHO THE CALL IS WITH: ${R?`A real estate agent representing the seller. The agent takes our number to the seller.`:`The seller directly (the homeowner). There is no agent.`}
+RETRADE TYPE: ${V.rtype==='ta'?`Time & Access. We locked at the seller's price, found a buyer, and the buyer is requesting more repairs than expected. Open with: "I found a buyer. Good news — they want the property. But they're requesting more repairs than I expected. I still want to close with you and do the repairs for them, but I'm gonna need to be at [YOUR NUMBER] to make this work."`:`The walkthrough or contractor numbers came back different than what we had.`}
+
+STEP 0 — READ EVERYTHING AND PULL THE FACTS FIRST (do not show this step in your answer)
+From the DISPO BRIEF, pull: property address, contract price, dispo's "Where we're at" number, each finding, contractor bid amounts, how much over our underwriting, and any term changes (close date, possession, tenants, commission, earnest money).
+From the DISCOVERY and OFFER CALL TRANSCRIPTS, pull: the other person's name, our closer's name, what they disclosed about the condition, their stated floor or price expectation, their motivation and situation, their payoff if mentioned, any competing offers or listing talk, anything our closer said or promised, their own words worth using, and how they operate (messenger or decision maker, relationship-driven, sophisticated, cooperative, guarded).
+Then classify each finding:
+- NEW: they never mentioned it on either call.
+- SCOPE: they disclosed it, and it just cost more than we underwrote.
+- MIXED: some of both, or the transcripts don't make it clear.
+
+STRICT RULES
+1. Use ONLY facts from the DISPO BRIEF and the TRANSCRIPTS below. Never invent findings, numbers, quotes, stats, competing offers, deadlines, or company claims.
+2. If something the script needs is missing, write [MISSING: what's needed] in that spot. Do not guess.
+3. How to talk about findings:
+   NEW → "When our team walked it, we found [finding]. That wasn't something we could see in the photos."
+   SCOPE → "You were upfront with us about [item], and we had that in our numbers. The numbers came back different than what we had." Own the underwriting miss. Never act surprised by anything they disclosed.
+   MIXED → "You were upfront with us about most of this, and we had it in our numbers. The numbers came back different than what we had, and [new item] wasn't something we could see in the photos."
+4. "Where we're at" is dispo's ceiling: the price we must stay under. It is NOT automatically the number the closer says. The closer chooses [YOUR NUMBER] strictly below where we're at—never equal to it and never above it.
+5. In every closer line, show the spoken number only as [YOUR NUMBER]. Immediately after that step, add this exact note: "Your call — below where we're at ($X)." Replace $X in the note with the "Where we're at" amount you pulled from the DISPO BRIEF. Do not replace [YOUR NUMBER].
+6. Do not put any other dollar amounts in the closer's quoted lines. Do not quote repair overages, seller floors, list prices, competing offers, money invested, contract price, or where we're at. Say "the numbers came back different than what we had" instead.
+7. If they counter, never agree or move on this call. Say "Let me take that back to my team," then end the call. Any new number comes from the team on a separate call.
+8. Write the way a regular person talks on the phone. Short sentences. No sales jargon, no hype, no dramatic lines.
+9. Use their own words from the transcripts when it helps, but only words that are actually in the transcripts.
+10. Every spoken line must be something the closer can read word for word.
+11. The transcripts are auto-generated and contain errors (wrong words, misheard names and places). Use context to understand what was meant. Never quote a garbled phrase. If you're not sure of a name or place, keep it general.
+
+MUST-CHECKS (do all of these before writing)
+A. Search the transcripts for anything our closer said or promised about price or effort (for example "every dollar," "best we can do," "maxed out," "put everything in"). If found, it MUST be one of the pushbacks, with this response pattern: "We did — based on what we knew then. The walkthrough came after. What we found moved the numbers. That's exactly why we do it."
+B. Search the transcripts for the pre-frame (our closer saying something like "if something comes up that we couldn't see, we'll work through it together"). If found, reference it once in a pushback, and note whether they agreed to it.
+C. If they threatened to list or mentioned a competing offer, use #2 Alternative Uncertain and #4 Future Pace. If they said anything about the condition hurting the value or inviting low offers, use their own words: "You told me yourself — ..." Do not just back off or refuse to discuss it.
+D. On this call, never ask them for a number, never say "give me a number," and never hint there's room. Only take a counter if they offer one, then say "Let me take that back to my team."
+
+THE FRAMEWORK (CHO Retrade Framework v1.5)
+Always use:
+#1 Advocate — The closer fought for the deal and is delivering news from the team. "I went back to my team on this because I didn't want to lose the deal." Never say "We need you to come down."
+#7 Silence — After every number and key statement, stop talking. Count to 15. They speak first.
+#10 Calibrated Close — "What would it take to make this work?" or "How do we get this across the finish line?"
+Use only when the facts support it:
+#2 Alternative Uncertain — competing offer or listing threat. "Has the other buyer done their inspection yet? So their offer isn't real yet." "Listing it doesn't mean selling it."
+#3 Sunk Cost — only if they mentioned money they put in. "Whatever you already put into it is spent. It's gone whether you sell to us or hold it another year."
+#4 Future Pace — "Anybody who walks this property is going to see the same things we found."
+#5 Certainty — always right after the number: "We're cash, we close on schedule, everything else stays the same."
+#8 Pre-Handle — if they stated a floor or concern, acknowledge it without repeating the old number: "I know they've been clear about what they need, and I pushed for that."
+#9 Hook — if rejection is likely: "If things change, you've got my number. I can't guarantee this number will still be available."
+Last resort only:
+#6 Ultimatum — only if THEY gave a specific ultimatum first: "I'll send the cancellation. But before I do — can I ask you one thing?" Never use it first.
+Rule 11 — The closer chooses [YOUR NUMBER] strictly below where we're at. Do not change it live. If they counter: "Let me take that back to my team." Get off the call. Only if the team later approves a new number that remains below where we're at, use it on a separate call: "I took your counter back to my team. They approved [TEAM'S APPROVED NUMBER]. That's the number the team approved."
+Rule 12 — If accused of bait and switch: "I understand how it looks. The numbers just came back different than we expected." Then silence. If pressed: "I hear you. This is where the numbers landed."
+${R?`If the agent is a messenger who can't decide on the call, replace the calibrated question with: restate the number, stay silent, and lock a time for their answer.`:``}
+
+TONE: Late-night FM DJ voice for all money talk — calm, slow, downward inflection, no uptalk. Apologize once at most.
+
+OUTPUT FORMAT — use exactly these sections, in this order, with these headings. No text before or after the script.
+
+1. Start with this exact line (no numbering, no "TITLE:" label): RETRADE CALL — [property address]
+2. DEAL SNAPSHOT — a two-column table with these rows: Property | ${R?`Agent`:`Seller`} | Contract | Where we're at (dispo) | Spoken number ([YOUR NUMBER]) | Findings | Disclosed vs. new | Their situation | Key risk
+3. DO NOT — bullet list. Always include:
+   - Do NOT replace [YOUR NUMBER] with where we're at automatically. The closer chooses it strictly below where we're at.
+   - Do NOT put any other dollar amounts in the closer's lines.
+   - Do NOT keep talking after the number. Count to 15.
+   - Do NOT change [YOUR NUMBER] on the call. A counter gets "Let me take that back to my team," then end the call.
+   - Do NOT pretend you found something they disclosed.
+   - Do NOT apologize more than once.
+   - Do NOT bring up their alternatives unless they do.
+   Add any deal-specific DO NOTs based on the brief and transcripts.
+4. THE CALL — STEP 1 Open (Advocate), STEP 2 Findings (one finding per beat, short pause between — no count-to-15 here), STEP 3 Pre-Handle, STEP 4 Future Pace (one sentence), STEP 5 The Number + Certainty (the closer says [YOUR NUMBER], then the certainty line immediately, THEN silence and count to 15 — never put silence between the number and the certainty line), STEP 6 Close. Under STEP 5, include the exact note: "Your call — below where we're at ($X)." Replace $X in the note with the amount pulled from the DISPO BRIEF, but leave [YOUR NUMBER] unchanged. For each step: the principle number, the exact words in quotes, then a stage direction in [brackets].
+5. WHEN THEY PUSH BACK — 4 to 7 pushbacks this person is most likely to say, based on the transcripts and the deal. Always include: a counter to [YOUR NUMBER], and ${R?`"Let me talk to the seller."`:`"I need to think about it."`} For each: what they say, the exact response, and a [stage direction]. Do not put dollar amounts in the closer's responses.
+6. IF IT'S DEAD — HOOK — exact words. If they're relationship-driven or mentioned future deals, end with a line that protects the relationship (for example, asking them to send the next one).
+7. SECOND CALL — TEAM-APPROVED NUMBER — exact words using [TEAM'S APPROVED NUMBER], and state that this is used only if the team approves a new number after a counter.
+8. QUICK REFERENCE — a two-column table: They say | You say.
+
+NUMBER RULE
+Where we're at: Pull this amount from the DISPO DEAL BRIEF. It is dispo's ceiling—the price we must stay under—not automatically the number the closer says.
+Spoken number: [YOUR NUMBER]
+In the generated script, write: "Your call — below where we're at ($X)." Replace $X with the amount pulled from the brief and leave [YOUR NUMBER] unchanged.
+Do not put any other dollar amounts in the closer's lines. If they counter, the closer says "Let me take that back to my team" and gets off the call. Any new number comes from the team on a separate call and must also stay below where we're at.
+
+DISPO DEAL BRIEF
+${val('dispo')}
+
+DISCOVERY CALL TRANSCRIPT
+${val('disc')}
+
+OFFER CALL TRANSCRIPT
+${val('offer')}`;
+}
+function briefSum(){
+  let h='<div class="sum"><span style="color:#b91c1c;font-weight:600">Low, slow, DJ voice · Your number stays below dispo\'s ceiling · Stop talking after the number · One apology max</span>';
+  if((V.dispo||'').trim())h+='<details><summary>Dispo brief</summary><pre>'+esc(V.dispo)+'</pre></details>';
+  if((V.disc||'').trim())h+='<details><summary>Discovery call</summary><pre>'+esc(V.disc)+'</pre></details>';
+  if((V.offer||'').trim())h+='<details><summary>Offer call</summary><pre>'+esc(V.offer)+'</pre></details>';
+  return h+'</div>';
+}
+
+function render(){
+  $('leadSeg').innerHTML=[['realtor','Realtor'],['seller','Direct Seller']].map(([k,n])=>'<button class="'+(k===lead?'on':'')+'" onclick="setLead(\''+k+'\')">'+n+'</button>').join('');
+  mode==='live'?rLive():rTrain();
+}
+
+function objectionsPanel(){
+  let h='<aside><h2>'+(lead==='realtor'?'Agent':'Seller')+' objections</h2>';
+  const fl=flatOb();
+  if(ao>-1)h+='<div class="ans"><p class="q">'+esc(fl[ao].q)+'</p>'+fl[ao].a.map(line).join('')+'</div>';
+  let n=0;
+  OB[lead].forEach(g=>{
+    if(g.h)h+='<div class="gh">'+esc(g.h)+'</div>';
+    h+='<div class="obs">'+g.i.map(o=>{const i=n++;return '<button class="ob '+(i===ao?'on':'')+'" onclick="so('+i+')">'+esc(o.q)+'</button>'}).join('')+'</div>';
+  });
+  return h+'</aside>';
+}
+
+function sellerOpen(){
+  if(SELLER_OPENS.includes(cur))return cur;
+  for(let i=hist.length-1;i>=0;i--)if(SELLER_OPENS.includes(hist[i]))return hist[i];
+  return 's_o_text';
+}
+function sheetLines(lines,renderOptional=line){
+  const opts=lines.filter(x=>x[0]==='o');
+  const hasObjections=opts.some(L=>objectionLines.has(L));
+  const allObjections=opts.length>0&&opts.every(L=>objectionLines.has(L));
+  const title=allObjections?'Objection responses':hasObjections?'Follow-ups &amp; objections':'Optional responses &amp; follow-ups';
+  let drawer=false;
+  return lines.map(L=>{
+    if(L[0]!=='o')return line(L);
+    if(drawer)return '';
+    drawer=true;
+    return '<details class="optionalstack'+(allObjections?' objectionstack':'')+'"><summary>'+title+' ('+opts.length+')</summary><div class="optionalbody">'+opts.map(renderOptional).join('')+'</div></details>';
+  }).join('');
+}
+const realtorTenantQuestions=[
+  ['s',`Are the tenants staying after closing, or will they be moving out?`],
+  ['o',`If they are moving out`,`When are they expected to be out?`],
+  ['s',`Are they month-to-month, or is there a lease?`],
+  ['o',`If there is a lease`,`When does the lease end?`],
+  ['s',`What are they paying in rent each month?`],
+  ['c',`Save the move-out plan, lease details, and monthly rent in the CRM. If there is more than one unit, get this for each unit.`]
+];
+function sheetStep(id,opt){
+  const s=ST[id],co=CO[s.c];
+  let body=sheetLines(s.l);
+  if(id==='r_g2')body=body.replace('Optional responses &amp; follow-ups (2)','Process reminder — use the version that fits (2)');
+  if(id==='r_g3')body=sheetLines(s.l,L=>line(['n','Use this instead of the normal delivery only if you had a great conversation with the agent and the approved offer is far below the seller’s stated price. Do not read both versions.'])+line(L)).replace('Optional responses &amp; follow-ups (1)','Large-gap offer — alternate delivery');
+  if(id==='r_cond'){
+    const firstQuestion=s.l.findIndex(L=>L[0]==='s')+2;
+    const firstOptional=s.l.findIndex(L=>L[0]==='o');
+    const questions=s.l.slice(firstQuestion,firstOptional);
+    const unknownAges=line(s.l[firstOptional])+line(['n','If they do not know, mark it unknown. If they give an estimate, mark it unconfirmed. Ask them to check with the seller and send the confirmed ages. Accurate ages help the underwriting team estimate repair costs.']);
+    const remaining=s.l.slice(firstOptional+1);
+    body=sheetLines(s.l.slice(0,firstQuestion))+'<details class="optionalstack"><summary>Required questions — ask or confirm ('+questions.length+')</summary><div class="optionalbody">'+questions.map(line).join('')+'</div></details>'+sheetLines(remaining.filter(L=>L[0]==='o'))+unknownAges+sheetLines(remaining.filter(L=>L[0]!=='o'));
+  }
+  if(id==='r_sit'){
+    const tenantFollowups=L=>line(L)+(L[1]==='If tenants are the problem'?'<details class="optionalstack"><summary>Tenant details — rent, lease &amp; move-out</summary><div class="optionalbody">'+realtorTenantQuestions.map(line).join('')+'</div></details>':'');
+    const guarded='<details class="optionalstack objectionstack"><summary>If they say “They just want to see your offer” or won’t share why they’re selling</summary><div class="optionalbody">'+ST.r_guard.l.map(line).join('')+line(['c','If they explain, use the follow-ups below. If they still won’t share, skip to Urgency.'])+'</div></details>';
+    body=sheetLines(s.l.slice(0,2))+guarded+sheetLines(s.l.slice(2),tenantFollowups);
+  }
+  let h='<div class="sheetstep"><h3>'+esc(s.t)+'</h3><div class="goal"><b>Goal</b>'+esc(co.g)+'</div>'+body;
+  if(coachOn)h+='<div class="coach"><div><b>Principle</b>'+esc(co.p)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Tone</b>'+esc(co.t)+'</div><div><b>Advance when</b>'+esc(co.a)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';
+  h+='</div>';
+  return opt?'<details class="sheetoptional'+(['r_g2push','r_g4'].includes(id)?' offerobjection':'')+'"><summary>'+esc(opt)+'</summary>'+h+'</details>':h;
+}
+function sectionObjections(section,offer=false){
+  const matches=(offer?OFFER_OB_MATCH:FIRST_OB_MATCH[lead])[section]||[],fl=flatOb();
+  const rows=fl.map((o,i)=>({o,i})).filter(x=>matches.some(m=>x.o.q.includes(m)));
+  if(!rows.length)return '';
+  const allObjections=rows.every(x=>isObjectionResponse(x.o));
+  return '<details class="optionalstack'+(allObjections?' objectionstack':'')+'"><summary>'+(allObjections?'Objection responses':'Questions &amp; objections')+' for this section ('+rows.length+')</summary><div class="optionalbody">'+rows.map(x=>'<div class="responseitem"><p class="q">If they say / ask: '+esc(x.o.q)+'</p>'+x.o.a.map(line).join('')+'</div>').join('')+'</div></details>';
+}
+// Offer Call: keep the normal conversation visible and each response one click away.
+// New gap language is a CHO adaptation, not a quotation from Chris Voss.
+const OFFER_GAP_RESPONSE=[
+ ['s',`It sounds like we're a long way from what they expected.`],
+ ['c',`Pause. Let the agent respond. Do not add commission or raise the offer to fill the silence.`]
+];
+const OFFER_WAIT_RESPONSE=[
+ ['o',`Only if they already told you a problem or deadline`,`You mentioned [their stated problem or deadline]. What happens with that if they keep the property?`],
+ ['c',`Listen. Use their answer to understand the options—not to scare them. If they can wait or have a better option, respect that.`],
+ ['n',`Do not invent costs, deadlines, lost offers, or guarantees. A real payoff or price barrier may mean there is no workable deal.`]
+];
+OFFER_GAP_RESPONSE.forEach(L=>{if(L[0]==='s')objectionLines.add(L)});
+OFFER_WAIT_RESPONSE.forEach(L=>{if(L[0]==='o')objectionLines.add(L)});
+function offerDrawer(title,body,green=false){
+  return '<details class="optionalstack offerresponse'+(green?' objectionstack':'')+'"><summary>'+esc(title)+'</summary><div class="optionalbody">'+body+'</div></details>';
+}
+function offerCard(title,body,id){
+  let h='<div class="sheetstep offerstep"><h3>'+esc(title)+'</h3>'+body;
+  if(coachOn&&id){const co=CO[ST[id].c];h+='<div class="coach"><div><b>Goal</b>'+esc(co.g)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';}
+  return h+'</div>';
+}
+function offerPart(id){return '<h4>'+esc(ST[id].t)+'</h4>'+ST[id].l.map(line).join('');}
+function offerLines(rows,green=false){
+  return rows.map(L=>{if(green&&(L[0]==='s'||L[0]==='o'))objectionLines.add(L);return line(L)}).join('');
+}
+function gateResponse(title,rows,green=false){return offerDrawer(title,offerLines(rows,green),green)}
+function gateDone(text){return '<p class="offerhint"><b>Gate complete:</b> '+esc(text)+'</p>'}
+function offerGroup(id){
+  if(id==='offer-check'){
+    return offerCard('Before dialing — not another discovery call',offerLines([
+      ['c','Discovery and underwriting should already be finished. Confirm the approved offer and range.'],
+      ['n','Do not make the offer when ALL FOUR are true:']
+    ])+'<ul><li>Asking close to the fixed-up value.</li><li>Firm on that price.</li><li>No meaningful work needed.</li><li>No reason or urgency to sell at a discount.</li></ul>'+line(['n','A large price gap alone does not fail this check. If there is a possible deal, move to Gate 2.']))+
+    gateResponse('If all four are true — keep the agent relationship',[
+      ['s','I spoke to the underwriting team. This one isn’t really our criteria. We normally buy properties that need some work or where the seller needs a faster solution.'],
+      ['s','Since you’re an agent in the area, do you have anything else that needs some work?'],
+      ['c','Record exactly why it does not work. Podio: Lead Stage — Unqualified; Motivation — Cold; Next Action — Future Follow Up.']
+    ])+gateDone('A possible deal moves to Gate 2, or the reason not to offer and future follow-up are recorded.');
+  }
+  if(id==='offer-number'){
+    const a=ST.r_g3.l,alt=a.find(L=>L[0]==='o'),reconnect=ST.r_g1.l,process=ST.r_g2.l;
+    const delivery=offerDrawer('Large gap — use this instead of the normal delivery',line(['n','Only after a great conversation, when the approved offer is far below their stated price. Read one version, not both.'])+line(alt)+line(a[a.length-1]));
+    return offerCard('Reconnect',line(reconnect[0])+line(reconnect[1])+offerDrawer("If it's a bad time",line(reconnect[2]),true),'r_g1')+
+      offerCard('Process review',line(process[0])+'<p class="offerhint">Read only the version that fits.</p>'+line(process[1])+line(process[2])+line(process[3]),'r_g2')+
+      offerCard('Deliver the number',line(['n',"DON'T GIVE ANYTHING AWAY FOR FREE. No volunteered commission, higher price, or concessions. Deliver the approved offer and wait."])+delivery+a.filter(L=>L[0]!=='n'&&L[0]!=='o').map(line).join(''),'r_g3')+
+      gateResponse('If the agent says “Too low,” “They won’t take it,” or “I already know their price”',ST.r_g2push.l,true)+
+      gateResponse('If they ask “Is that your best offer?”',[
+        ['s','That’s where the team landed based on the numbers. I know it may not be where the seller hoped, but go ahead and present it, and let’s see what they say.'],
+        ['n','Do not reveal the ceiling, suggest room, or promise to come up.']
+      ],true)+
+      gateResponse('If the agent refuses to present it',[
+        ['s','Is that your recommendation, or did the seller tell you not to present offers below a certain amount?'],
+        ['o','Only if the seller gave instructions','Did the seller give you a lowest number they would consider?'],
+        ['c','If it is only the agent’s recommendation, ask once more to present it. If they still refuse, send the offer for their records, document “Agent declined to present,” and stop active follow-up on this property. Do not log a seller rejection.']
+      ],true)+
+      gateResponse('If you need to understand the agent’s reaction',[
+        ['s','Based on what you know about the seller, how do you think they’ll respond?'],
+        ['n','This is a prediction, not a counter. It does not change our offer.']
+      ])+
+      offerCard('Send it & lock the clock',offerLines([
+        ['n','Use only if the seller has not answered yet. If they have, go to Gate 3. Do not ask for a presentation time again if the agent already gave it—just set the callback.'],
+        ['c','Send the offer in writing. A yes today is welcome, but the next step is getting it presented.'],
+        ['s','When are you presenting it, and when should I call you back for the seller’s decision?'],
+        ['s','Okay, I’ll call you back on [day] at [time] to hear what they decided.'],
+        ['c','Save both times in Podio. If the seller has already accepted, go directly to Agreement & access.']
+      ]))+gateDone('Offer sent, presentation confirmed, and exact callback set—or the agent’s refusal documented.');
+  }
+  if(id==='offer-answer'){
+    return offerCard('After the offer has been presented',offerLines([
+      ['n','Start here as soon as the seller has answered this offer—even during the same call. Use what the agent already told you. Do not repeat answered questions or ask them to present it again.'],
+      ['s','What exactly did the seller say?'],
+      ['n','Choose their actual answer below. “Thinking,” “more time,” “other offers,” “haven’t heard back,” and “I’ll get back to you” are not counteroffers.']
+    ]))+
+    gateResponse('Accepted — go straight to signatures',[
+      ['s','Great. Let’s get the agreement signed while everyone is ready.'],
+      ['c','Go to Agreement & access. Do not reopen price negotiations.']
+    ])+
+    gateResponse('Countered — confirm it came from the seller',[
+      ['n','Only ask where the counter came from if that is still unclear. If the agent already confirmed it came from the seller, move to commitment.'],
+      ['s','Did that counter come directly from the seller?'],
+      ['o','If yes — test commitment, not a new offer','If we can get approval to improve the offer, will everyone sign?'],
+      ['n','A firm yes can move to Gate 4. “I think so” or “Let me check” is not commitment—hold the offer and have the agent confirm. If the seller is firm but has not explained the number, use Gate 4 to learn what supports it.'],
+      ['c','If it is the agent’s guess, keep the offer unchanged and get the seller’s actual answer.']
+    ])+
+    gateResponse('Rejected — find out what they said no to',[
+      ['s','What exactly did the seller say no to? Did they give you a number or terms that would work?'],
+      ['c','Identify the issue: price, closing date, inspection period, commission, possession, or another term. A specific issue or firm seller number goes to Gate 4. No current path goes to future follow-up.']
+    ],true)+
+    gateResponse('Still deciding — hold the offer & set a time',[
+      ['s','Our offer stands. When will they be able to make their decision?'],
+      ['c','Set an exact day and time. More time is not a reason to improve the offer. Honor the offer’s actual validity terms.']
+    ])+
+    gateResponse('If they mention higher offers',[
+      ['s','Are those written offers the seller can accept now, or are they still being discussed?'],
+      ['s','Besides price, how do the terms compare? Are they cash, and do they have financing, inspections, or other conditions?'],
+      ['o','If the agent stays vague','Understood. Our offer is based on what works for us. Let me know what the seller decides.'],
+      ['n','Do not bid against an unconfirmed offer.']
+    ],true)+gateDone('Accepted, a real counter or issue, rejected with no path, or another exact decision time set.');
+  }
+  if(id==='offer-counters'){
+    return line(['n','Open this gate only for a real seller counter, rejection with a number, specific objection, or new information. The agent disliking the offer is not enough. If the seller’s issue is already clear, use the matching response below—do not restart discovery or repeat the presentation story.'])+
+      offerCard('1. Find the real issue',offerLines([
+        ['s','Is it just the price, or is something else not working?'],
+        ['c','Listen. Use only the response that fits. You may be able to fix a term without raising the price.']
+      ]))+
+      gateResponse('If another term is the problem',[
+        ['s','If we solve that issue, does our price work?'],
+        ['c','Confirm the specific term and get approval for any change. Do not offer extra concessions.']
+      ],true)+
+      gateResponse('2. If they are firm on price — what supports it?',[
+        ['s','It sounds like the seller is pretty firm on that number. Help me understand what they’re looking at. Are there comps or upgrades that our underwriting team may have missed?'],
+        ['s','If you can send me the recent solds or anything else supporting their number, I’ll have underwriting review it. I can’t promise it will change the offer, but it gives us something real to work with.'],
+        ['c','Collect comps, photos, upgrades, repair details, or other evidence. Send it to underwriting; do not debate it on the call.'],
+        ['n','No evidence—or evidence that does not support the number—means hold the offer. A desired price alone is not proof of value. If there is no path, record future follow-up.']
+      ],true)+
+      gateResponse('If the seller’s price is still far above ours — understand their plan',[
+        ['s','It sounds like we’re a long way from what they expected.'],
+        ['c','Pause. Ask the next question after they respond. This is not a reason to raise the offer.'],
+        ['s','If they don’t get that price, what’s their plan for the property?'],
+        ['o','If they plan to hold it','What does holding onto it mean for them in the meantime?'],
+        ['o','If they want to test the market','How long do they want to try that before reviewing their options again?'],
+        ...OFFER_WAIT_RESPONSE,
+        ['c','If they want to revisit, agree on an exact day and time. Record their plan. Do not assume they will return in 30 days or promise today’s offer indefinitely; recheck with the team when they return.']
+      ],true)+
+      gateResponse('If the payoff or amount they need is above our offer',[
+        ['s','Is that the amount they need to pay off what’s owed, or what they want to walk away with?'],
+        ['c','Record what is confirmed and what is still an estimate. Take new information to the underwriting team. Do not promise to cover the gap; there may be no workable deal.']
+      ],true)+
+      gateResponse('If they worry the price will change after the walkthrough',[
+        ['c',"Answer the price-change concern directly. Saying 'we buy as-is' does not answer it."],
+        ['s',ST.r_frame.l[2][1]],
+        ['n','Explain only approved inspection and price-change terms. Do not promise a fixed price or waive conditions without approval.']
+      ],true)+
+      gateResponse('3–5. Only if there is a reason to consider a change — commitment & approval',[
+        ['n','A seller counter, new information, or commitment is a reason to review—not automatic approval to raise the offer. Never invent a higher number to restart the conversation.'],
+        ['s','If we can get that approved, will everyone sign with everything else staying the same?'],
+        ['c','If uncertain, stop here: hold the current offer and have the agent confirm with the seller.'],
+        ['c','Get approval. Stay within the approved range. Anything above the ceiling goes back to underwriting. Promise nothing; keep the current offer until a new amount is approved.'],
+        ['o','Only after approval','The team approved $[AMOUNT]. If that works, let’s get the agreement signed.'],
+        ['n','If they counter again, repeat the process. Every move needs a reason and must bring the deal closer to signatures.']
+      ])+
+      gateResponse('If there is no workable deal today',[
+        ['s','It sounds like we’re not lined up right now. When would it make sense to check back?'],
+        ['c','Record why there is no path. Podio: Lead Stage — Offer Rejected; Motivation — Cold; Next Action — Future Follow Up. Record an agreed callback if there is one.']
+      ])+gateDone('Signed agreement, current offer held with a clear next step, or no current path with future follow-up recorded.');
+  }
+  if(id==='offer-close'){
+    const a=ST.r_lock.l;
+    const core=a.filter(L=>L[0]!=='o').map(line).join('');
+    return '<p class="offerhint">After they agree: confirm approval, contract details, and access.</p>'+
+      offerCard('Lock it',core+offerDrawer('If they ask us to write it or need a faster closing',a.filter(L=>L[0]==='o').map(line).join('')),'r_lock')+
+      offerCard('Confirm access & close',sheetLines(ST.r_agree.l),'r_agree')+
+      gateResponse('After the offer — save the Podio record',[
+        ['c','Record the offer amount and LOG; whether it was presented; any agent refusal; the seller’s actual answer; counter or objection; new evidence; signing commitment; reason for movement; and exact next action and follow-up time.']
+      ])+
+      offerDrawer('After signing — Day 2–3 check-in',ST.r_check.l.map(line).join(''));
+  }
+  return '';
+}
+function rFirstSheet(offer=false){
+  const groups=offer?REALTOR_OFFER_FLOW:FIRST_FLOW[lead],open=lead==='seller'?sellerOpen():null;
+  let h='<div class="bar2"><div class="seg">'+calls().map((x,i)=>'<button class="'+(i===ci?'on':'')+'" onclick="setCall('+i+')">'+x.n+'</button>').join('')+'</div>';
+  h+='<label class="tog"><input type="checkbox" '+(coachOn?'checked':'')+' onchange="coachOn=this.checked;render()"> Show coaching</label></div>';
+  h+='<div class="sheetnav"><div class="chips" style="margin:0">'+groups.map((g,i)=>'<button class="chip" onclick="document.getElementById(\'sheet-'+g.id+'\').scrollIntoView({behavior:\'smooth\',block:\'start\'})">'+(offer?'':(i+1)+'. ')+esc(g.n)+'</button>').join('')+'</div></div>';
+  h+='<main class="sheetmain"><div class="top"><span class="crumb">'+(offer?'Offer Call':'First Call')+' · Full call sheet</span><div>';
+  if(lead==='seller')h+='<button class="ghost" onclick="cur=\'s_ch\';hist=[];render()">Change lead source</button>';
+  h+='<button class="ghost" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">Top</button></div></div>';
+  h+=offer?'<p class="sheetintro"><b>Never argue. Agent reaction is not seller rejection. No free movement.</b><br>Yellow: questions &amp; follow-ups. Green: objections. Use only what fits. If accepted, go straight to Agreement &amp; access.<br><a href="https://docs.google.com/document/d/137CsUJm0Yq4vMJjbvE9aacSOge-pqll0WhKieXkO5q0/edit" target="_blank" rel="noopener">Original Four Gates reference</a></p>':'<p class="sheetintro"><b>Stay in the conversation.</b> Move down the sheet naturally. Each section includes only the objections that fit that moment.</p>';
+  groups.forEach((g,i)=>{
+    h+='<section class="sheetgroup" id="sheet-'+g.id+'"><div class="sheethead"><h2>'+(offer?'':(i+1)+'. ')+esc(g.n)+'</h2></div>';
+    if(offer)h+=offerGroup(g.id);
+    else{
+      if(g.note)h+=line(['n',g.note]);
+      g.steps.forEach(([id,opt])=>{h+=sheetStep(id==='$open'?open:id,opt)});
+      h+=sectionObjections(g.id);
+    }
+    h+='</section>';
+  });
+  h+='<div class="btns">'+(offer?'':'<button class="go rec" onclick="go(\'@offer\')">Go to Offer Call →</button>')+'<button class="go" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">Back to top</button></div>';
+  h+='</main>';
+  $('live').innerHTML=h;
+}
+
+function rLive(){
+  if(C().k==='first'&&!(lead==='seller'&&cur==='s_ch'))return rFirstSheet();
+  if(lead==='realtor'&&C().k==='offer')return rFirstSheet(true);
+  const c=C(),s=ST[cur],co=CO[s.c],rt=isRT(cur);
+  let h='<div class="bar2"><div class="seg">'+calls().map((x,i)=>'<button class="'+(i===ci?'on':'')+'" onclick="setCall('+i+')">'+x.n+'</button>').join('')+'</div>';
+  h+='<label class="tog"><input type="checkbox" '+(coachOn?'checked':'')+' onchange="coachOn=this.checked;render()"> Show coaching</label></div>';
+  h+='<div class="chips">'+c.p.map(([id,n])=>'<button class="chip '+((id===cur||id===s.a)?'on':'')+'" onclick="jump(\''+id+'\')">'+esc(n)+'</button>').join('')+'</div>';
+  h+='<div class="cols"><main>';
+  h+='<div class="top"><span class="crumb">'+esc(s.t)+'</span><div><button class="ghost" onclick="back()" '+(hist.length?'':'disabled')+'>← Back</button><button class="ghost" onclick="startCall();render()">Restart</button></div></div>';
+  if(rt&&!s.brief)h+=briefSum();
+  h+='<div class="goal"><b>Goal</b>'+esc(co.g)+'</div>';
+  h+=cur==='r_agree'?sheetLines(s.l):s.l.map(line).join('');
+  if(s.brief)h+=briefForm();
+  if(coachOn)h+='<div class="coach"><div><b>Principle</b>'+esc(co.p)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Tone</b>'+esc(co.t)+'</div><div><b>Advance when</b>'+esc(co.a)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';
+  h+='<div class="btns">'+s.b.map(([l,to])=>'<button class="go" onclick="go(\''+to+'\')">'+esc(l)+'</button>').join('')+'</div>';
+  h+='</main>'+objectionsPanel()+'</div>';
+  $('live').innerHTML=h;
+}
+
+// ---------- TRAINING ----------
+function deckCards(k){
+  if(k==='obj')return OB[lead].flatMap(g=>g.i.map(o=>({f:(g.h?esc(g.h)+' · ':'')+esc(o.q),g:'',b:o.a})));
+  const c=calls().find(x=>x.k===k);
+  return c.p.filter(([id])=>!['s_ch','s_alt','rr_prep','sr_prep'].includes(id)).map(([id])=>{const s=ST[id],co=CO[s.c];return{f:c.n+' · '+esc(s.t),g:co.g,b:s.l.filter(x=>x[0]!=='c').concat([['n','Advance when: '+co.a]])}});
+}
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startDeck(k){deck=k;tot=deckCards(k).length;pile=shuf([...Array(tot).keys()]);shown=false;render()}
+function gotIt(){pile.shift();shown=false;render()}
+function again(){pile.push(pile.shift());shown=false;render()}
+function setSub(t){tsub=t;render()}
+function pick(i){if(sans>-1)return;sans=i;sat++;if(i===SC[lead][si].r)sok++;render()}
+function nextS(){si=(si+1)%SC[lead].length;sans=-1;render()}
+
+function rTrain(){
+  let h='<div class="bar2 wrap"><div class="seg">'+[['cards','Flashcards'],['scen','Scenarios'],['rules','Rules']].map(([k,n])=>'<button class="'+(k===tsub?'on':'')+'" onclick="setSub(\''+k+'\')">'+n+'</button>').join('')+'</div></div>';
+  if(tsub==='cards'){
+    if(!deck){deck='obj';tot=deckCards('obj').length;pile=shuf([...Array(tot).keys()]);shown=false}
+    h+='<p class="note wrap"><b>How it works:</b> Pick a deck. Read the card and say your answer out loud. Click <b>Show answer</b> to check. Click <b>Got it</b> if you said it right, or <b>Practice again</b> and it comes back later.</p>';
+    h+='<div class="bar2 wrap"><div class="seg">'+[['obj','Objections']].concat(calls().map(c=>[c.k,c.n])).map(([k,n])=>'<button class="'+(k===deck?'on':'')+'" onclick="startDeck(\''+k+'\')">'+n+'</button>').join('')+'</div></div>';
+    h+='<div class="card wrap">';
+    if(!pile.length){h+='<div class="done"><h3>Done — you got all '+tot+'.</h3><p style="color:var(--mut)">Run it again until you can say every answer without looking.</p><div class="btns" style="justify-content:center"><button class="go rec" onclick="startDeck(deck)">Start over</button></div></div>'}
+    else{
+      const c=deckCards(deck)[pile[0]],got=tot-pile.length;
+      h+='<div class="count">'+pile.length+' left</div><div class="pbar"><div style="width:'+(got/tot*100)+'%"></div></div><div class="front">'+c.f+'</div>';
+      if(c.g)h+='<div class="goal"><b>Goal</b>'+esc(c.g)+'</div>';
+      if(!shown)h+='<p class="cue">Say it out loud first, then check.</p><div class="btns"><button class="go rec" onclick="shown=true;render()">Show answer</button></div>';
+      else h+=c.b.map(line).join('')+'<div class="btns"><button class="go rec" onclick="gotIt()">Got it</button><button class="go" onclick="again()">Practice again</button></div>';
+    }
+    h+='</div>';
+  }else if(tsub==='scen'){
+    const s=SC[lead][si];
+    h+='<div class="card wrap"><div class="top"><span class="crumb">'+esc(s.st)+'</span><span class="count">'+sok+' correct · '+sat+' attempted</span></div>';
+    h+='<div class="scen">'+esc(s.x)+'</div><p style="font-weight:700;margin:0 0 10px">What\'s the right next move?</p>';
+    h+=s.c.map((t,i)=>{let cl='choice';if(sans>-1){if(i===s.r)cl+=' right';else if(i===sans)cl+=' wrong'}return '<button class="'+cl+'" onclick="pick('+i+')">'+esc(t)+'</button>'}).join('');
+    if(sans>-1)h+='<div class="fb"><b>'+(sans===s.r?'Correct. ':'Not quite. ')+'</b>'+esc(s.w)+'</div><div class="btns"><button class="go rec" onclick="nextS()">Next scenario →</button></div>';
+    h+='</div>';
+  }else{
+    h+='<div class="card wrap"><div class="crumb" style="margin-bottom:8px">Rules of the game</div><ol class="rules">'+RU.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ol></div>';
+  }
+  $('train').innerHTML=h;
+}
+
+render();
+</script>
+</body>
+</html>
