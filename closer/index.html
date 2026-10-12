@@ -894,7 +894,7 @@ function gateResponse(title,rows,green=false){return offerDrawer(title,offerLine
 function gateDone(text){return '<p class="offerhint"><b>Gate complete:</b> '+esc(text)+'</p>'}
 function offerGroup(id){
   if(id==='offer-check'){
-    return offerCard('Before dialing — not another discovery call',offerLines([
+    return offerCard('Before dialing — not another discovery call','<div class="rulesbox"><strong>Expect this on every offer call: “We have higher offers.”</strong><ul><li>Don’t argue and don’t raise your number.</li><li>Get the offer presented to the seller.</li><li>Set an exact time to call back for the seller’s answer.</li><li>If there’s another offer, get the amount and when their due diligence ends.</li></ul></div>'+offerLines([
       ['c','Discovery and underwriting should already be finished. Confirm the approved offer and range.'],
       ['n','Do not make the offer when ALL FOUR are true:']
     ])+'<ul><li>Asking close to the fixed-up value.</li><li>Firm on that price.</li><li>No meaningful work needed.</li><li>No reason or urgency to sell at a discount.</li></ul>'+line(['n','A large price gap alone does not fail this check. If there is a possible deal, move to Gate 2.']))+
@@ -911,6 +911,15 @@ function offerGroup(id){
       offerCard('Process review',line(process[0])+'<p class="offerhint">Read only the version that fits.</p>'+line(process[1])+line(process[2])+line(process[3]),'r_g2')+
       offerCard('Deliver the number',line(['n',"DON'T GIVE ANYTHING AWAY FOR FREE. No volunteered commission, higher price, or concessions. Deliver the approved offer and wait."])+delivery+a.filter(L=>L[0]!=='n'&&L[0]!=='o').map(line).join(''),'r_g3')+
       gateResponse('If the agent says “Too low,” “They won’t take it,” or “I already know their price”',ST.r_g2push.l,true)+
+      gateResponse('If they say “We have higher offers”',[
+        ['s','Wow. What are the other offers coming in at?'],
+        ['c','Write the number down.'],
+        ['s','That’s about [gap] apart. I’m not sure how they’re going to make it work at that number.'],
+        ['s','I get it, there’s always someone that offers the world. But with other agents I’ve worked with, those buyers don’t end up performing, and a lot of times the agent comes back to us because our offer is real.'],
+        ['s','Go ahead and present ours. When are you presenting it, and when should I call you back for the seller’s decision?'],
+        ['c','Save the competing offer amount and both times in Podio.'],
+        ['n','Do not raise the offer or add commission.']
+      ],true)+
       gateResponse('If they ask “Is that your best offer?”',[
         ['s','That’s where the team landed based on the numbers. I know it may not be where the seller hoped, but go ahead and present it, and let’s see what they say.'],
         ['n','Do not reveal the ceiling, suggest room, or promise to come up.']
@@ -960,9 +969,16 @@ function offerGroup(id){
     gateResponse('If they mention higher offers',[
       ['s','Are those written offers the seller can accept now, or are they still being discussed?'],
       ['s','Besides price, how do the terms compare? Are they cash, and do they have financing, inspections, or other conditions?'],
-      ['o','If the agent stays vague','Understood. Our offer is based on what works for us. Let me know what the seller decides.'],
+      ['s','We’d need to be closer to our number. But I like working with you and I want to build a relationship. When is the due diligence period up with them?'],
+      ['s','Is it cool if I follow up with you on [date] if it doesn’t pan out?'],
+      ['c','In Podio, save the competing offer amount and their due diligence end date, set the follow-up for that date, and note: offer far apart, follow-up set.'],
       ['n','Do not bid against an unconfirmed offer.']
-    ],true)+gateDone('Accepted, a real counter or issue, rejected with no path, or another exact decision time set.');
+    ],true)+
+    gateResponse('Follow-up call — on their due diligence date',[
+      ['s','Hey [Name], I talked to you about [Address] last week. How did that contract pan out? Are you guys closing?'],
+      ['o','If it fell through','I hate to say I told you so, I just didn’t know how they were going to make it work at that number. Where are you guys at now? I can talk to my team and see if we can put our offer back in front of you, or a fresh offer.'],
+      ['c','Log their answer in Podio.']
+    ])+gateDone('Accepted, a real counter or issue, rejected with no path, or another exact decision time set.');
   }
   if(id==='offer-counters'){
     return line(['n','Open this gate only for a real seller counter, rejection with a number, specific objection, or new information. The agent disliking the offer is not enough. If the seller’s issue is already clear, use the matching response below—do not restart discovery or repeat the presentation story.'])+
