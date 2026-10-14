@@ -156,6 +156,37 @@ aside.ocact li{margin-bottom:6px}
 aside.ocact ul.ocstep{background:#fff5f5;border-left:5px solid #f87171;border-radius:10px;padding:12px 14px 6px 32px}
 .ocdone{margin:0;font-size:15px;line-height:1.45;color:#7f1d1d;background:#fff5f5;border-left:5px solid #f87171;border-radius:10px;padding:10px 14px}
 .ocdone b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#b91c1c;margin-bottom:2px}
+.fcopts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.fcopt{font:inherit;font-size:15px;font-weight:600;text-align:left;padding:9px 14px;border:1px solid var(--opt);border-radius:999px;background:var(--optbg);color:#5c4a00;cursor:pointer}
+.fcopt.ob{border-color:#7cc4b6;background:#ecfdf5;color:#0f5f57}
+.fcopt.on{background:#6b4f00;border-color:#6b4f00;color:#fff}
+.fcopt.ob.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.fcresp{margin:12px 0 0;padding:12px;border:2px solid #e5e5e5;border-radius:12px;background:#fcfcfb}
+.fcresp .say{margin-bottom:8px}
+.fcresp .q{font-weight:700;font-size:15px;margin:0 0 8px}
+.fcmain{padding:16px 18px}
+.fcmain .top{margin-bottom:8px}
+.fcmain .say{font-size:18px;line-height:1.4;padding:8px 14px;margin:0 0 8px}
+.fcmain .say.opt{font-size:16px}
+.fcmain .cue{font-size:14px;padding:6px 12px;margin:0 0 8px}
+.fcmain .type{margin-bottom:4px}
+.fcmain .oclabel{margin:12px 0 -6px}
+.fcmain .btns{margin-top:12px}
+.fcmain .go{padding:10px 16px}
+.fcresp{padding:10px}
+.fcresp .say{font-size:16px;padding:8px 12px}
+.fcgrp p{margin:0 0 6px}
+.fcgrp p:last-child{margin:0}
+.fctabs{display:flex;margin:0 0 14px}
+.fctabs button{flex:1}
+.fcobhint{font-size:13px;color:var(--mut);margin:0 0 8px}
+.fcobs{gap:5px}
+.fcobs .ob{font-size:14px;padding:7px 10px}
+.fcmain+aside.ocact{padding:14px 16px}
+.fcmain+aside.ocact .ocalways{padding:10px 12px 1px;margin-bottom:12px}
+.fcmain+aside.ocact ul{font-size:14px;margin-bottom:12px}
+.fcmain+aside.ocact .ocdone{font-size:14px;padding:8px 12px;margin-bottom:12px!important}
+.fcmain+aside.ocact ul.ocstep{padding:10px 12px 4px 28px}
 </style>
 </head>
 <body>
@@ -1233,6 +1264,8 @@ function rOfferTap(){
   $('live').innerHTML=h;
 }
 const FC_INLINE=['Wait','Get name','Get address','Let them lead','Wait for confirmation','Wait — write it down'];
+const FC_STORY=/We worked with an agent last month|we had a seller last month/;
+const FC_ROB={r_open:[`I'm walking into an appointment`],r_sit:[`They just want to see what you'll offer`],r_guard:[`They just want to see what you'll offer`],r_cond:[`It's in pretty good shape`],r_owe:[`Why do you need to know their mortgage`],r_price:[`Just send your best offer`]};
 function fcSection(id){
   const s=ST[id],key=SELLER_OPENS.includes(id)?'$open':id;
   for(const g of FIRST_FLOW[lead]){if(g.steps.some(([x])=>x===key||(s.a&&x===s.a)))return g.id}
@@ -1240,34 +1273,55 @@ function fcSection(id){
 }
 ST.r_tenant={t:'Tenant details — rent, lease & move-out',c:'sit',a:'r_sit',l:realtorTenantQuestions,b:[['Next →','r_dec']]};
 ST.r_sitdeep.b=[['Next →','r_dec'],['Tenants are the problem','r_tenant']];
-let fcLast='';
+ST.r_cond2={t:'Property details — the specifics',c:'cond',a:'r_cond',l:ST.r_cond.l.slice(3),b:ST.r_cond.b};
+let fcLast='',fo=-1,fcTab='act';
+function fcO(i){fo=fo===i?-1:i;ao=-1;render()}
+function fcOb(i){ao=ao===i?-1:i;fo=-1;render()}
+function fcLine(L){
+  if(L[0]==='o'&&FC_STORY.test(L[2]))return '<p class="say objection opt"><span class="type type-objection">Third-party story</span><span class="tag">'+esc(L[1])+'</span>'+fill(L[2])+'</p>';
+  return line(L);
+}
 function rFirstTap(){
-  if(fcLast!==cur){ao=-1;fcLast=cur}
+  if(fcLast!==cur){ao=-1;fo=-1;fcLast=cur}
   const c=C(),s=ST[cur],co=CO[s.c],sec=fcSection(cur);
   let h='<div class="bar2"><div class="seg">'+calls().map((x,i)=>'<button class="'+(i===ci?'on':'')+'" onclick="setCall('+i+')">'+x.n+'</button>').join('')+'</div>';
   h+='<label class="tog"><input type="checkbox" '+(coachOn?'checked':'')+' onchange="coachOn=this.checked;render()"> Show coaching</label></div>';
-  const onChip=id=>id===cur||id===s.a||(SELLER_OPENS.includes(cur)&&id==='s_ch')||(cur==='r_sitdeep'&&id==='r_sit')||(cur==='r_guard'&&id==='r_sit')||(cur==='r_tenant'&&id==='r_sit');
+  const onChip=id=>id===cur||id===s.a||(SELLER_OPENS.includes(cur)&&id==='s_ch')||(cur==='r_sitdeep'&&id==='r_sit')||(cur==='r_guard'&&id==='r_sit')||(cur==='r_tenant'&&id==='r_sit')||(cur==='r_cond2'&&id==='r_cond');
   h+='<div class="ocgates">'+c.p.map(([id,n])=>'<button class="'+(onChip(id)?'on':'')+'" onclick="jump(\''+id+'\')">'+esc(n)+'</button>').join('')+'</div>';
-  h+='<div class="cols"><main><div class="top"><span class="crumb">First Call · '+esc(s.t)+'</span><div><button class="ghost" onclick="back()" '+(hist.length?'':'disabled')+'>← Back</button><button class="ghost" onclick="startCall();render()">Restart</button></div></div>';
-  const side=[],hasSay=s.l.some(L=>L[0]==='s'||L[0]==='o');
+  h+='<div class="cols"><main class="fcmain"><div class="top"><span class="crumb">First Call · '+esc(s.t)+'</span><div><button class="ghost" onclick="back()" '+(hist.length?'':'disabled')+'>← Back</button><button class="ghost" onclick="startCall();render()">Restart</button></div></div>';
+  const side=[],opts=[],hasSay=s.l.some(L=>L[0]==='s'||L[0]==='o');
   let lines=s.l;
   if(cur==='r_sit')lines=s.l.slice(0,s.l.findIndex(L=>L[0]==='o')).filter(L=>L[0]!=='n');
+  if(cur==='r_cond')lines=s.l.slice(0,3);
+  const btns=cur==='r_cond'?[['Next: the specifics →','r_cond2']]:s.b;
+  let grp=[];const flush=()=>{if(grp.length){h+=grp.length>1?'<div class="say fcgrp"><span class="type type-say">Say</span>'+grp.map(x=>'<p>'+fill(x[1])+'</p>').join('')+'</div>':line(grp[0]);grp=[]}};
   lines.forEach(L=>{
-    if(L[0]==='s'||L[0]==='o'||!hasSay||(L[0]==='c'&&FC_INLINE.includes(L[1]))){
-      h+=line(L);
-    }else side.push(L[1]);
-  });
-  if(cur==='r_cond')side.push('If they do not know the ages, mark it unknown. If they give an estimate, mark it unconfirmed. Ask them to check with the seller and send the confirmed ages. Accurate ages help the underwriting team estimate repair costs.');
+    if(L[0]==='s'&&!objectionLines.has(L)){grp.push(L);return}
+    if(L[0]==='o'){opts.push(L);return}
+    if(L[0]==='s'||!hasSay||(L[0]==='c'&&FC_INLINE.includes(L[1]))){flush();h+=line(L)}
+    else side.push(L[1]);
+  });flush();
+  if(cur==='r_cond2')side.push('If they do not know the ages, mark it unknown. If they give an estimate, mark it unconfirmed. Ask them to check with the seller and send the confirmed ages. Accurate ages help the underwriting team estimate repair costs.');
   if(cur==='r_guard')side.push('If they explain, use the follow-ups. If they still won’t share, skip to Urgency.');
-  if(ao>-1){const o=flatOb()[ao];h+='<div class="responseitem"><p class="q">If they say / ask: '+esc(o.q)+'</p>'+o.a.map(line).join('')+'</div>'}
-  h+='<div class="btns">'+s.b.map(([l,to])=>'<button class="go" onclick="go(\''+to+'\')">'+esc(l)+'</button>').join('')+'</div></main>';
-  h+='<aside class="ocact"><div class="ocalways"><h2>Every first call</h2><ul><li>Stay in the conversation. Move through it naturally.</li><li>Use only the questions and objection responses that fit that moment.</li></ul></div>';
-  h+='<p class="ocdone" style="margin-bottom:16px"><b>Goal</b>'+esc(co.g)+'</p>';
-  if(side.length)h+='<h2>How to act on this step</h2><ul class="ocstep">'+side.map(x=>'<li>'+fill(x)+'</li>').join('')+'</ul>';
-  h+='<p class="ocdone"><b>Move on when</b>'+esc(co.a)+'</p>';
-  if(coachOn)h+='<div class="coach" style="margin-top:16px"><div><b>Principle</b>'+esc(co.p)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Tone</b>'+esc(co.t)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';
-  const fl=flatOb(),m=(FIRST_OB_MATCH[lead]||{})[sec]||[],rows=fl.map((o,i)=>({o,i})).filter(x=>m.some(q=>x.o.q.includes(q)));
-  if(rows.length)h+='<h2 style="margin-top:18px;color:#0f5f57">If they say… (tap to show the response)</h2><div class="obs">'+rows.map(x=>'<button class="ob '+(x.i===ao?'on':'')+'" onclick="so('+x.i+')">'+esc(x.o.q)+'</button>').join('')+'</div>';
+  if(opts.length){
+    h+='<p class="oclabel">Tap what fits</p><div class="fcopts">'+opts.map((L,i)=>'<button class="fcopt'+(objectionLines.has(L)||FC_STORY.test(L[2])?' ob':'')+(i===fo?' on':'')+'" onclick="fcO('+i+')">'+esc(L[1])+'</button>').join('')+'</div>';
+  }
+  if(fo>-1&&opts[fo])h+='<div class="fcresp">'+fcLine(opts[fo])+'</div>';
+  if(ao>-1){const o=flatOb()[ao];h+='<div class="fcresp"><p class="q">If they say / ask: '+esc(o.q)+'</p>'+o.a.map(line).join('')+'</div>'}
+  h+='<div class="btns">'+btns.map(([l,to])=>'<button class="go" onclick="go(\''+to+'\')">'+esc(l)+'</button>').join('')+'</div></main>';
+  const fl=flatOb(),m=lead==='realtor'?(FC_ROB[cur]||[]):((FIRST_OB_MATCH.seller||{})[sec]||[]),rows=fl.map((o,i)=>({o,i})).filter(x=>m.some(q=>x.o.q.includes(q)));
+  const tab=rows.length?fcTab:'act';
+  h+='<aside class="ocact">';
+  if(rows.length)h+='<div class="seg fctabs"><button class="'+(tab==='act'?'on':'')+'" onclick="fcTab=\'act\';render()">What to do</button><button class="'+(tab==='ob'?'on':'')+'" onclick="fcTab=\'ob\';render()">If they say… ('+rows.length+')</button></div>';
+  if(tab==='act'){
+    h+='<div class="ocalways"><h2>Every first call</h2><ul><li>Stay in the conversation. Move through it naturally.</li><li>Use only the questions and objection responses that fit that moment.</li></ul></div>';
+    h+='<p class="ocdone" style="margin-bottom:16px"><b>Goal</b>'+esc(co.g)+'</p>';
+    if(side.length)h+='<h2>How to act on this step</h2><ul class="ocstep">'+side.map(x=>'<li>'+fill(x)+'</li>').join('')+'</ul>';
+    h+='<p class="ocdone"><b>Move on when</b>'+esc(co.a)+'</p>';
+    if(coachOn)h+='<div class="coach" style="margin-top:16px"><div><b>Principle</b>'+esc(co.p)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Tone</b>'+esc(co.t)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';
+  }else{
+    h+='<p class="fcobhint">Tap one. The response shows on the left.</p><div class="obs fcobs">'+rows.map(x=>'<button class="ob '+(x.i===ao?'on':'')+'" onclick="fcOb('+x.i+')">'+esc(x.o.q)+'</button>').join('')+'</div>';
+  }
   h+='</aside></div>';
   $('live').innerHTML=h;
 }
