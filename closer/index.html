@@ -187,6 +187,13 @@ aside.ocact ul.ocstep{background:#fff5f5;border-left:5px solid #f87171;border-ra
 .fcmain+aside.ocact ul{font-size:14px;margin-bottom:12px}
 .fcmain+aside.ocact .ocdone{font-size:14px;padding:8px 12px;margin-bottom:12px!important}
 .fcmain+aside.ocact ul.ocstep{padding:10px 12px 4px 28px}
+.fcresp .fcgrp p{font-size:16px}
+.fcresp{padding:8px;margin-top:10px}
+.fcresp .say{margin-bottom:6px;padding:7px 12px}
+.fcresp .say:last-child{margin-bottom:0}
+.fcresp .fcgrp p{margin-bottom:4px;line-height:1.35}
+.fcopts{margin:10px 0 2px;gap:6px}
+.fcopt{padding:7px 12px}
 </style>
 </head>
 <body>
@@ -261,7 +268,7 @@ r_owe:{t:`Mortgage & equity`,c:`owe`,l:[['s',`Is there a mortgage on the propert
 r_price:{t:`Price`,c:`price`,l:[['s',`Is there a number they have in mind?`],['s',`Once everyone has reviewed the offer, what's a realistic timeframe for a decision?`],['c',`Write their number down. Don't react.`],['o',`If they give a number`,`By the way. Is there flexibility there, or is that firm?`],['o',`After they give a number`,`Let me see what I can do. Send me some pictures and I'll take it to the underwriting team — see if we can make that work.`],['o',`If they won't give a number — one more try`,`Totally get it. We're looking at a few properties, and our underwriting team has a pretty tight range. I don't want either of us chasing something that's not close. Even a ballpark helps — where do the sellers need to be?`],['o',`If they still won't give a number`,`That's fine — we'll underwrite it based on the property's as-is condition and come back with what we can offer.`],['o',`If they say to come see it`,`We'd love to see it. We look at a lot of properties though, so we wait until we have an agreement in place before we send our team out. Tell you what — send me some pictures for now and let's see if we can get close on numbers.`]],b:[['Next →','r_frame']]},
 r_frame:{t:`Process`,c:`frame`,l:[['s',`Let me tell you how we work so there's no surprises.`],['s',`Once we agree on price, we sign an agreement. Our team does a quick walk-through to verify the condition. If everything checks out, we close on schedule.`],['s',`If something comes up that wasn't mentioned or we couldn't see from photos, we work through it together. No ghosting, no games — just communication.`],['s',`Sound fair?`],['o',`If they seem worried about a retrade`,`No, that's not how we operate. We worked with an agent last month who had the same concern — she'd been burned by investors before. We walked the property, everything matched what she told us, closed in 18 days. She sent us another deal last week.`]],b:[['Next →','r_dual']]},
 r_dual:{t:`Dual representation`,c:`dec`,l:[['s',`One more thing — we don't have an agent on our side. Would you be open to representing us on the offer?`],['o',`If yes`,`Great — we'll work directly with you then.`],['o',`If they ask about commission`,`We typically do 1% of the purchase price or a flat fee. We can work out the details when we get there.`],['o',`If they need to check`,`No problem — just let me know.`]],b:[['Next →','r_end1']]},
-r_end1:{t:`Close the first call`,c:`end1`,l:[['s',`Alright — I've got what I need. I'll get with my team and have something for you by [TIMEFRAME].`],['s',`Best email to send it to?`],['s',`Perfect. Talk soon, [Name].`],['c',`Set the exact day and time for the next call.`],['n',`Save the call notes in Podio.`],['n',`Before you make the offer, open the Four Gates and keep it beside this script. The script tells you what to say. The Four Gates tells you what to do next — from checking whether we should offer to getting the seller's answer and working the number.`]],b:[['Go to Offer Call →','@offer'],['End call','_end']]},
+r_end1:{t:`Close the first call`,c:`end1`,l:[['s',`Alright — I've got what I need. I'll get with my team and have something for you by [TIMEFRAME].`],['s',`Best email to send it to?`],['s',`Perfect. Talk soon, [Name].`],['c',`Set the exact day and time for the next call.`],['n',`Save the call notes in Podio.`],['n',`Before the offer call, open the Offer Call tab. It walks you through the gates, from checking whether we should offer to getting the seller's answer and working the number.`]],b:[['Go to Offer Call →','@offer'],['End call','_end']]},
 // REALTOR · OFFER CALL
 r_g1:{t:`Reconnect`,c:`open`,l:[['s',`Hey [Name], it's [Your Name] with Cactus. Got a minute?`],['o',`If they have time`,`Good — I just got out of underwriting on [Address]. Got the numbers back.`],['o',`If it's a bad time`,`No problem — when works better?`]],b:[['Good time →','r_g2'],['Set callback','_end']]},
 r_g2:{t:`Process review`,c:`frame`,l:[['s',`Before I give you the number — quick reminder on how we work.`],['o',`If you already have photos`,`Once we agree, we sign, and our team does a quick walk-through to verify condition. Title works in the background. Once it all clears — we close and your client gets paid.`],['o',`If you don't have photos yet`,`Once we agree, we sign, get photos within 24 hours, and our team does a quick walk-through to verify condition. Title works in the background. Once it all clears — we close and your client gets paid.`],['s',`Simple.`]],b:[['Next →','r_g3']]},
@@ -728,7 +735,7 @@ rejected:{g:3,ob:1,t:'Rejected — find out what they said no to',say:[['s','Wha
 deciding:{g:3,t:'Still deciding',loop:1,say:[['s','Our offer stands. When will they be able to make their decision?'],['s','Perfect. I’ll give you a call [day] at [time] to see what they decided. Does that work?']],
  act:['More time is not a reason to improve the offer.','Set an exact day and time. Save it in Podio.'],
  b:[['New call ↺','_r']]},
-g3higher:{g:3,ob:1,t:'If they mention higher offers',say:[['s','Are those written offers the seller can accept now, or are they still being discussed?'],['s','Besides price, how do the terms compare? Are they cash, and do they have financing, inspections, or other conditions?'],['s','We’d need to be closer to our number. But I like working with you and I want to build a relationship. When is the due diligence period up with them?'],['s','Is it cool if I follow up with you on [date] if it doesn’t pan out?']],
+g3higher:{g:3,ob:1,t:'If they mention higher offers',say:[['s','Are those written offers the seller can accept now, or are they still being discussed?'],['s','Besides price, is there anything that would stand out to your seller?'],['s','We’d need to be closer to our number. But I like working with you and I want to build a relationship. When is the due diligence period up with them?'],['s','Would you be against me checking back on [date] if it doesn’t pan out?']],
  act:['Don\'t bid against an unconfirmed offer.','In Podio, save the competing offer amount and their due diligence end date, set the follow-up for that date, and note: offer far apart, follow-up set.'],
  b:[['Follow-up set — end call','_r'],['On the follow-up date →','followup']]},
 followup:{g:3,t:'Follow-up call',say:[['s','Hey [Name], I talked to you about [Address] last week. How did that contract pan out? Are you guys closing?'],['o','If it fell through','I hate to say I told you so, I just didn’t know how they were going to make it work at that number. Where are you guys at now? I can talk to my team and see if we can put our offer back in front of you, or a fresh offer.']],
@@ -1281,6 +1288,51 @@ function fcLine(L){
   if(L[0]==='o'&&FC_STORY.test(L[2]))return '<p class="say objection opt"><span class="type type-objection">Third-party story</span><span class="tag">'+esc(L[1])+'</span>'+fill(L[2])+'</p>';
   return line(L);
 }
+// Realtor First Call buttons: labeled in agents' words, most common first (Sept 1 – Oct 13 first-call data).
+const FC_MAP={
+ r_open:[{l:'Has time',t:['If they have time']},{l:'"Who are you with?"',x:[['s','I’m with Cactus.']],ob:1}],
+ r_dec:[{l:'"It’s just one person"',t:['If one person makes the decision']},{l:'"It’s a married couple" / others involved',t:['If anyone else is involved']},{l:'"They need to see the offer first"',t:['If they need to see the offer first']}],
+ r_cond2:[{l:'"Needs some TLC" / mentions problems',t:['If they mention problems']},{l:'"We don’t know the ages"',t:['If they don\'t know the roof, AC, or water heater ages']},{l:'Has a pool',t:['If there\'s a pool']},{l:'Manufactured home',t:['If it\'s a manufactured home']},{l:'Septic or land',t:['If it\'s septic or land']}],
+ r_time:[{l:'"As soon as possible" / gives a date',t:['If they give a date']},{l:'"No rush"',t:['If no rush']},{l:'"How soon can you close?"',t:['If they ask how soon we can close']}],
+ r_owe:[{l:'"I don’t know" / won’t share',t:['If they don\'t know or still won\'t share']},{l:'"Why do you need to know?"',t:['If they ask why']}],
+ r_price:[{l:'Gives a number',t:['If they give a number','After they give a number']},{l:'"You bring me an offer"',t:['If they won\'t give a number — one more try']},{l:'"We already have other offers"',ob:1,x:[
+   ['s','Got it. What are the other offers coming in at?'],
+   ['s','Are those written offers the seller can accept now, or are they still being discussed?'],
+   ['s','Besides price, is there anything that would stand out to your seller?'],
+   ['s','Would it be a bad idea to still get ours in front of your seller?'],
+   ['o','If they already accepted one','When is the due diligence period up with them? Would you be against me checking back on [date] if it doesn’t pan out?']],
+   act:['Stay calm. Don’t argue or knock the other buyer. Name it first: “It sounds like there’s already some strong interest.”','Write down the other offer’s price and terms. Save them in Podio.','Don’t promise to beat it or give a number on this call. Underwriting decides.','If they already accepted one, save the due diligence date and set the follow-up for that day.']},
+  {l:'Still won’t give a number',t:['If they still won\'t give a number']},{l:'"Come see it"',t:['If they say to come see it']}],
+ r_frame:[{l:'"Will you knock the price down later?"',t:['If they seem worried about a retrade']},{l:'"Are you the end buyer?" / "Is this a wholesale?"',x:[['s','No, we buy properties to fix them up.']],ob:1}],
+ r_dual:[{l:'"Yeah, definitely"',t:['If yes']},{l:'"What’s the commission?"',t:['If they ask about commission']},{l:'"Let me check"',t:['If they need to check']}],
+ r_end1:[{l:'"Which company are you with?"',x:[['s','We’re with Cactus.']],ob:1}]
+};
+const FC_SIDE={
+ r_open:['Sound glad to talk to them. Keep it light.','If they’re busy, don’t start the questions. Set an exact day and time to call back.'],
+ r_dec:['Ask it matter-of-fact. Don’t skip it.','Write down who decides and anyone else involved, like a spouse, family, or the bank. Everyone on title has to sign.'],
+ r_price:['Be ready for other offers to come up here. If they do, tap “We already have other offers.”'],
+ r_frame:['Explain the process before any talk about the offer. Clear, calm, and confident.','Don’t skip “we work through it together.” It keeps a walk-through change from being a surprise later.','Don’t promise anything the company can’t guarantee.'],
+ r_dual:['Ask once. If they need to check, move on.','Stick to the script on commission: 1% or a flat fee. Work out the details later. Don’t agree to a higher number on this call.']
+};
+const FC_NAV={r_open:{'Good time':'Has time →','Bad time':'"I’m in a meeting" / bad time'}};
+function fcItems(id,opts){
+  const m=FC_MAP[id];
+  if(!m)return opts.map(L=>({l:L[1],lines:[L],ob:objectionLines.has(L)||FC_STORY.test(L[2]),act:[]}));
+  const used=new Set(),items=m.map(sp=>{
+    const lines=sp.x?sp.x:sp.t.map(tg=>{const L=opts.find(o=>o[1]===tg);if(L)used.add(L);return L}).filter(Boolean);
+    return {l:sp.l,lines,ob:!!sp.ob||lines.some(L=>objectionLines.has(L)||(L[0]==='o'&&FC_STORY.test(L[2]))),act:sp.act||[]};
+  }).filter(it=>it.lines.length);
+  opts.forEach(L=>{if(!used.has(L))items.push({l:L[1],lines:[L],ob:objectionLines.has(L),act:[]})});
+  return items;
+}
+function fcResp(it){
+  let h='',grp=[];
+  const plain=L=>!(it.ob)&&!objectionLines.has(L);
+  const flush=()=>{if(!grp.length)return;if(grp.length===1){h+=one(grp[0])}else{const ob=it.ob||objectionLines.has(grp[0]);h+='<div class="say fcgrp'+(ob?' objection':'')+'"><span class="type '+(ob?'type-objection">Objection response':'type-say">Say')+'</span>'+grp.map(x=>'<p>'+fill(x[1])+'</p>').join('')+'</div>'}grp=[]};
+  const one=L=>it.ob&&!objectionLines.has(L)&&!(L[0]==='o'&&FC_STORY.test(L[2]))?'<p class="say objection'+(L[0]==='o'?' opt':'')+'"><span class="type type-objection">Objection response</span>'+(L[0]==='o'?'<span class="tag">'+esc(L[1])+'</span>':'')+fill(L[L.length-1])+'</p>':fcLine(L);
+  it.lines.forEach(L=>{if(L[0]==='s'){grp.push(L)}else{flush();h+=one(L)}});flush();
+  return h;
+}
 function rFirstTap(){
   if(fcLast!==cur){ao=-1;fo=-1;fcLast=cur}
   const c=C(),s=ST[cur],co=CO[s.c],sec=fcSection(cur);
@@ -1303,20 +1355,23 @@ function rFirstTap(){
   });flush();
   if(cur==='r_cond2')side.push('If they do not know the ages, mark it unknown. If they give an estimate, mark it unconfirmed. Ask them to check with the seller and send the confirmed ages. Accurate ages help the underwriting team estimate repair costs.');
   if(cur==='r_guard')side.push('If they explain, use the follow-ups. If they still won’t share, skip to Urgency.');
-  if(opts.length){
-    h+='<p class="oclabel">Tap what fits</p><div class="fcopts">'+opts.map((L,i)=>'<button class="fcopt'+(objectionLines.has(L)||FC_STORY.test(L[2])?' ob':'')+(i===fo?' on':'')+'" onclick="fcO('+i+')">'+esc(L[1])+'</button>').join('')+'</div>';
+  const items=fcItems(cur,opts);
+  if(items.length){
+    h+='<p class="oclabel">'+(FC_MAP[cur]?'What did they say? (most common first)':'Tap what fits')+'</p><div class="fcopts">'+items.map((it,i)=>'<button class="fcopt'+(it.ob?' ob':'')+(i===fo?' on':'')+'" onclick="fcO('+i+')">'+esc(it.l)+'</button>').join('')+'</div>';
   }
-  if(fo>-1&&opts[fo])h+='<div class="fcresp">'+fcLine(opts[fo])+'</div>';
+  (FC_SIDE[cur]||[]).forEach(a=>side.push(a));
+  let fcFocus=false;
+  if(fo>-1&&items[fo]){h+='<div class="fcresp">'+fcResp(items[fo])+'</div>';if(items[fo].act.length){fcFocus=true;side.length=0;items[fo].act.forEach(a=>side.push(a))}}
   if(ao>-1){const o=flatOb()[ao];h+='<div class="fcresp"><p class="q">If they say / ask: '+esc(o.q)+'</p>'+o.a.map(line).join('')+'</div>'}
-  h+='<div class="btns">'+btns.map(([l,to])=>'<button class="go" onclick="go(\''+to+'\')">'+esc(l)+'</button>').join('')+'</div></main>';
+  h+='<div class="btns">'+btns.map(([l,to])=>'<button class="go" onclick="go(\''+to+'\')">'+esc((FC_NAV[cur]||{})[l]||l)+'</button>').join('')+'</div></main>';
   const fl=flatOb(),m=lead==='realtor'?(FC_ROB[cur]||[]):((FIRST_OB_MATCH.seller||{})[sec]||[]),rows=fl.map((o,i)=>({o,i})).filter(x=>m.some(q=>x.o.q.includes(q)));
   const tab=rows.length?fcTab:'act';
   h+='<aside class="ocact">';
   if(rows.length)h+='<div class="seg fctabs"><button class="'+(tab==='act'?'on':'')+'" onclick="fcTab=\'act\';render()">What to do</button><button class="'+(tab==='ob'?'on':'')+'" onclick="fcTab=\'ob\';render()">If they say… ('+rows.length+')</button></div>';
   if(tab==='act'){
-    h+='<div class="ocalways"><h2>Every first call</h2><ul><li>Stay in the conversation. Move through it naturally.</li><li>Use only the questions and objection responses that fit that moment.</li></ul></div>';
-    h+='<p class="ocdone" style="margin-bottom:16px"><b>Goal</b>'+esc(co.g)+'</p>';
-    if(side.length)h+='<h2>How to act on this step</h2><ul class="ocstep">'+side.map(x=>'<li>'+fill(x)+'</li>').join('')+'</ul>';
+    if(!fcFocus){h+='<div class="ocalways"><h2>Every first call</h2><ul><li>Stay in the conversation. Move through it naturally.</li><li>Use only the questions and objection responses that fit that moment.</li><li><b>Before you hang up, set the exact day and time for the next call.</b></li></ul></div>';
+    h+='<p class="ocdone" style="margin-bottom:16px"><b>Goal</b>'+esc(co.g)+'</p>';}
+    if(side.length)h+='<h2>'+(fcFocus?'How to act: '+esc(items[fo].l):'How to act on this step')+'</h2><ul class="ocstep">'+side.map(x=>'<li>'+fill(x)+'</li>').join('')+'</ul>';
     h+='<p class="ocdone"><b>Move on when</b>'+esc(co.a)+'</p>';
     if(coachOn)h+='<div class="coach" style="margin-top:16px"><div><b>Principle</b>'+esc(co.p)+'</div><div><b>Why it works</b>'+esc(co.w)+'</div><div><b>Tone</b>'+esc(co.t)+'</div><div><b>Common mistake</b>'+esc(co.m)+'</div></div>';
   }else{
@@ -1326,7 +1381,8 @@ function rFirstTap(){
   $('live').innerHTML=h;
 }
 function rLive(){
-  if(C().k==='first')return rFirstTap();
+  if(C().k==='first'&&lead==='realtor')return rFirstTap();
+  if(C().k==='first'&&!(lead==='seller'&&cur==='s_ch'))return rFirstSheet();
   if(lead==='realtor'&&C().k==='offer')return rOfferTap();
   const c=C(),s=ST[cur],co=CO[s.c],rt=isRT(cur);
   let h='<div class="bar2"><div class="seg">'+calls().map((x,i)=>'<button class="'+(i===ci?'on':'')+'" onclick="setCall('+i+')">'+x.n+'</button>').join('')+'</div>';
