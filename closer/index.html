@@ -194,6 +194,17 @@ aside.ocact ul.ocstep{background:#fff5f5;border-left:5px solid #f87171;border-ra
 .fcresp .fcgrp p{margin-bottom:4px;line-height:1.35}
 .fcopts{margin:10px 0 2px;gap:6px}
 .fcopt{padding:7px 12px}
+
+.ticker{contain:inline-size;width:100%;min-width:0;display:flex;align-items:center;overflow:hidden;background:#7a1f1f;border:2px solid #d8a600;border-radius:8px;margin:0 0 12px}
+.ticker .tk-tag{flex:none;background:#d8a600;color:#1a1a1a;font-size:12px;font-weight:900;letter-spacing:.05em;padding:9px 10px;white-space:nowrap}
+.ticker .tk-track{flex:1;min-width:0;overflow:hidden}
+.ticker .tk-move{display:inline-flex;white-space:nowrap;animation:tkScroll 30s linear infinite;padding:8px 0}
+.ticker:hover .tk-move{animation-play-state:paused}
+.ticker .tk-run{display:inline-flex;align-items:center}
+.ticker .tk-item{color:#fff;font-size:15px;font-weight:700}
+.ticker b{color:#ffe08a}
+.ticker .tk-dot{color:#d8a600;font-size:10px;padding:0 22px}
+@keyframes tkScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 </style>
 </head>
 <body>
@@ -1258,10 +1269,15 @@ function ocGo(to){if(to==='_r')return ocRestart();ocHist.push(ocCur);ocCur=to;re
 function ocJump(id){if(id!==ocCur){ocHist.push(ocCur);ocCur=id;render()}}
 function ocBack(){if(ocHist.length){ocCur=ocHist.pop();render()}}
 function ocRestart(){ocCur='start';ocHist=[];render()}
+function offerTicker(){
+  const items=['Offer + repairs = <b>70% of ARV</b>','Max <b>73%</b> with approval','Price repairs in <b>before</b> you offer','<b>7-day</b> inspection'];
+  const run='<span class="tk-run">'+items.map(x=>'<span class="tk-item">'+x+'</span><span class="tk-dot">◆</span>').join('')+'</span>';
+  return '<div class="ticker" role="note" aria-label="Offer rule for homes built 1980 or older"><span class="tk-tag">BUILT 1980 OR OLDER</span><div class="tk-track"><div class="tk-move">'+run+run+'</div></div></div>';
+}
 function rOfferTap(){
   const s=OC[ocCur];
   let h='<div class="bar2"><div class="seg">'+calls().map((x,i)=>'<button class="'+(i===ci?'on':'')+'" onclick="setCall('+i+')">'+x.n+'</button>').join('')+'</div></div>';
-  h+='<div class="ocgates">'+OC_GATES.map(([n,id,g])=>'<button class="'+(g===s.g?'on':'')+'" onclick="ocJump(\''+id+'\')">'+n+'</button>').join('')+'</div>';
+  h+='<div class="ocgates">'+OC_GATES.map(([n,id,g])=>'<button class="'+(g===s.g?'on':'')+'" onclick="ocJump(\''+id+'\')">'+n+'</button>').join('')+'</div>'+offerTicker();
   h+='<div class="cols"><main class="'+(s.loop?'ocloop':'')+'"><div class="top"><span class="crumb">'+esc(s.t)+'</span><div><button class="ghost" onclick="ocBack()" '+(ocHist.length?'':'disabled')+'>← Back</button><button class="ghost" onclick="ocRestart()">Restart</button></div></div>';
   if(s.list)h+='<div class="ocplain">'+esc(s.list[0])+(s.list[1].length?'<ul>'+s.list[1].map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'')+'</div>';
   if(s.say)h+=s.say.map(L=>ocSay(L,s.ob)).join('');
